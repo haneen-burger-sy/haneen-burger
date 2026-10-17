@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>مطعم حنين برغر | المنيو والطلب السريع</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #e63946;
+      --accent: #f4a261;
+      --bg: #111113;
+      --card-bg: #1c1c21;
+      --text: #ffffff;
+      --text-muted: #a0a0aa;
+      --border: #2e2e38;
+      --success: #25d366;
+    }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Cairo', sans-serif;
+      -webkit-tap-highlight-color: transparent;
+    }
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      padding-bottom: 90px;
+    }
+    header {
+      background: linear-gradient(180deg, rgba(230, 57, 70, 0.25) 0%, rgba(17, 17, 19, 0.95) 100%), #16161a;
+      text-align: center;
+      padding: 30px 16px 20px;
+      border-bottom: 1px solid var(--border);
+    }
+    .badge {
+      display: inline-block;
+      background: rgba(244, 162, 97, 0.15);
+      color: var(--accent);
+      padding: 4px 14px;
+      border-radius: 20px;
+      font-size: 0.85rem;
+      font-weight: 700;
+      margin-bottom: 10px;
+      border: 1px solid rgba(244, 162, 97, 0.3);
+    }
+    header h1 {
+      font-size: 2rem;
+      font-weight: 900;
+      color: #fff;
+      margin-bottom: 6px;
+    }
+    header p {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+    }
+    .categories-bar {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      background: rgba(17, 17, 19, 0.95);
+      backdrop-filter: blur(8px);
+      display: flex;
+      gap: 8px;
+      padding: 12px 16px;
+      overflow-x: auto;
+      scrollbar-width: none;
+      border-bottom: 1px solid var(--border);
+    }
+    .categories-bar::-webkit-scrollbar { display: none; }
+    .cat-btn {
+      background: #23232b;
+      color: var(--text-muted);
+      border: 1px solid var(--border);
+      padding: 8px 18px;
+      border-radius: 30px;
+      white-space: nowrap;
+      font-size: 0.9rem;
+      font-weight: 700;
+      cursor: pointer;
+    }
+    .cat-btn.active {
+      background: var(--primary);
+      color: #fff;
+      border-color: var(--primary);
+    }
+    .container {
+      max-width: 650px;
+      margin: 0 auto;
+      padding: 16px;
+    }
+    .section-title {
+      font-size: 1.3rem;
+      font-weight: 800;
+      margin: 20px 0 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .section-title span {
+      background: var(--primary);
+      width: 4px;
+      height: 20px;
+      border-radius: 4px;
+      display: inline-block;
+    }
+    .items-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .item-card {
+      background: var(--card-bg);
+      border-radius: 14px;
+      padding: 12px;
+      display: flex;
+      gap: 14px;
+      align-items: center;
+      border: 1px solid var(--border);
+    }
+    .item-img {
+      width: 85px;
+      height: 85px;
+      border-radius: 10px;
+      object-fit: cover;
+      flex-shrink: 0;
+    }
+    .item-details { flex-grow: 1; }
+    .item-name { font-size: 1.05rem; font-weight: 700; margin-bottom: 4px; }
+    .item-desc { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 6px; }
+    .item-price { color: var(--accent); font-weight: 800; font-size: 0.95rem; }
+    .qty-controls { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
+    .btn-qty {
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      border: none;
+      background: #2e2e3a;
+      color: #fff;
+      font-size: 1.1rem;
+      font-weight: 700;
+      cursor: pointer;
+    }
+    .btn-qty.plus { background: var(--primary); }
+    .qty-display { font-weight: 700; font-size: 1rem; min-width: 18px; text-align: center; }
+    .cart-bar {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: #18181e;
+      border-top: 1px solid var(--border);
+      padding: 12px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 100;
+      max-width: 650px;
+      margin: 0 auto;
+    }
+    .cart-count { font-size: 0.85rem; color: var(--text-muted); }
+    .cart-total { font-size: 1.15rem; font-weight: 900; color: var(--accent); }
+    .btn-checkout {
+      background: var(--success);
+      color: #fff;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 10px;
+      font-size: 0.95rem;
+      font-weight: 700;
+      cursor: pointer;
+    }
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0,0,0,0.75);
+      z-index: 200;
+      justify-content: center;
+      align-items: flex-end;
+    }
+    .modal-overlay.active { display: flex; }
+    .modal-content {
+      background: #1c1c24;
+      border-radius: 20px 20px 0 0;
+      width: 100%;
+      max-width: 600px;
+      padding: 22px 20px 30px;
+      border-top: 2px solid var(--primary);
+    }
+    .modal-title { font-size: 1.2rem; font-weight: 800; margin-bottom: 14px; text-align: center; }
+    .form-group { margin-bottom: 12px; }
+    .form-group label { display: block; font-size: 0.85rem; color: var(--text-muted); margin-bottom: 5px; }
+    .form-group input, .form-group textarea {
+      width: 100%;
+      padding: 10px 14px;
+      background: #252530;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      color: #fff;
+    }
+    .modal-actions { display: flex; gap: 10px; margin-top: 18px; }
+    .btn-confirm { flex: 2; background: var(--success); color: #fff; border: none; padding: 12px; border-radius: 10px; font-weight: 800; cursor: pointer; }
+    .btn-cancel { flex: 1; background: #2e2e3a; color: #ddd; border: none; padding: 12px; border-radius: 10px; font-weight: 700; cursor: pointer; }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="badge">جودة ونكهة مميزة ⭐</div>
+    <h1>مطعم حنين برغر</h1>
+    <p>الطعم اللي يرضيك • أهلاً وسهلاً بكم</p>
+  </header>
+
+  <div class="categories-bar">
+    <button class="cat-btn active" onclick="filterCategory('all')">الكل</button>
+    <button class="cat-btn" onclick="filterCategory('burgers')">🍔 البرغر</button>
+    <button class="cat-btn" onclick="filterCategory('meals')">🍟 الوجبات</button>
+    <button class="cat-btn" onclick="filterCategory('sandwiches')">🥖 السندويشات</button>
+  </div>
+
+  <div class="container" id="menu-container"></div>
+
+  <div class="cart-bar" id="cart-bar" style="display: none;">
+    <div class="cart-info">
+      <span class="cart-count" id="cart-count">0 وجبات</span>
+      <span class="cart-total" id="cart-total">0 ل.س</span>
+    </div>
+    <button class="btn-checkout" onclick="openCheckoutModal()">
+      <span>إتمام الطلب عبر واتساب 💬</span>
+    </button>
+  </div>
+
+  <div class="modal-overlay" id="checkout-modal">
+    <div class="modal-content">
+      <h3 class="modal-title">تفاصيل الطلب والتوصيل</h3>
+      <div class="form-group">
+        <label>اسم الزبون الكريم *</label>
+        <input type="text" id="cust-name" placeholder="أدخل اسمك" required>
+      </div>
+      <div class="form-group">
+        <label>العنوان / رقم الطاولة أو سفري *</label>
+        <input type="text" id="cust-address" placeholder="مثال: سرمدا - أو طاولة 3" required>
+      </div>
+      <div class="form-group">
+        <label>ملاحظات إضافية على الطلب</label>
+        <textarea id="cust-notes" rows="2" placeholder="مثلاً: بدون مخلل، زيادة ثومية..."></textarea>
+      </div>
+      <div class="modal-actions">
+        <button class="btn-confirm" onclick="sendOrderToWhatsApp()">إرسال الطلب الآن 🚀</button>
+        <button class="btn-cancel" onclick="closeCheckoutModal()">رجوع</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const RESTAURANT_PHONE = "963938671515";
+
+    const menuData = [
+      { id: 1, category: "burgers", name: "برغر لحم", price: 35000, desc: "لحم عجل طازج متبل مع صوص البرغر الخاص والخس", img: "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=200&q=80" },
+      { id: 2, category: "burgers", name: "برغر جاج", price: 30000, desc: "صدر دجاج شهي مقرمش مع الجبنة والخس", img: "https://images.unsplash.com/photo-1615297928064-24977384d0ec?w=200&q=80" },
+      { id: 3, category: "burgers", name: "برغر تشيلي", price: 34000, desc: "برغر غني بصوص التشيلي الحار اللذيذ", img: "https://images.unsplash.com/photo-1586190848861-99aa4a171e90?w=200&q=80" },
+      { id: 4, category: "burgers", name: "برغر مكس", price: 38000, desc: "مزيج فاخر من اللحم والدجاج مع الخضار والجبنة", img: "https://images.unsplash.com/photo-1550547660-d9450f859349?w=200&q=80" },
+      { id: 5, category: "burgers", name: "برغر امريكانا", price: 36000, desc: "برغر كلاسيكي على الطريقة الأمريكية الأصلية", img: "https://images.unsplash.com/photo-1572802419224-296b0aeee0d9?w=200&q=80" },
+      { id: 6, category: "burgers", name: "برغر زنجر", price: 32000, desc: "فيليه دجاج زنجر مقرمش سبايسي مع الصوص", img: "https://images.unsplash.com/photo-1525059696034-4967a8e1dca2?w=200&q=80" },
+      { id: 7, category: "meals", name: "وجبة فاهيتا", price: 42000, desc: "دجاج فاهيتا متبل بالخضار يقدم مع البطاطا والصوص", img: "https://images.unsplash.com/photo-1544025162-d76694265947?w=200&q=80" },
+      { id: 8, category: "meals", name: "وجبة مكسيكانو", price: 42000, desc: "خلطة مكسيكانو حارة وشهية مع بطاطا مقرمشة ومقبلات", img: "https://images.unsplash.com/photo-1626700051175-6818013e1d4f?w=200&q=80" },
+      { id: 9, category: "meals", name: "وجبة غواصة", price: 45000, desc: "وجبة دجاج غواصة غنية بالجبن الذائب والبطاطا", img: "https://images.unsplash.com/photo-1555939594-58d7cb561ad1?w=200&q=80" },
+      { id: 10, category: "meals", name: "وجبة كريسبي", price: 45000, desc: "قطع كريسبي دجاج ذهبية مقرمشة مع البطاطا والثومية", img: "https://images.unsplash.com/photo-1626082927389-6cd097cdc6ec?w=200&q=80" },
+      { id: 11, category: "meals", name: "وجبة سبايسي", price: 45000, desc: "قطع دجاج مقرمشة بتتبيلة حارة جداً ومميزة", img: "https://images.unsplash.com/photo-1562967914-608f82629710?w=200&q=80" },
+      { id: 12, category: "meals", name: "وجبة زنجر", price: 45000, desc: "وجبة زنجر حارة مع بطاطا صوابع ومقبلات وكولسلو", img: "https://images.unsplash.com/photo-1513185158878-8d8c2a2a3da3?w=200&q=80" },
+      { id: 13, category: "meals", name: "وجبة بطاطا", price: 20000, desc: "صحن بطاطا مقلية مقرمشة كبير مع الثوم والكاتشب", img: "https://images.unsplash.com/photo-1573080496219-bb080dd4f877?w=200&q=80" },
+      { id: 14, category: "sandwiches", name: "سندويشة كريسبي", price: 25000, desc: "كريسبي دجاج مقرمش مع المايونيز والخس", img: "https://images.unsplash.com/photo-1528735602780-2552fd46c7af?w=200&q=80" },
+      { id: 15, category: "sandwiches", name: "سندويشة سبايسي", price: 25000, desc: "دجاج متبل بخلطة حارة مع الصوص والمخلل", img: "https://images.unsplash.com/photo-1509722747041-616f39b57569?w=200&q=80" },
+      { id: 16, category: "sandwiches", name: "سندويشة فاهيتا", price: 25000, desc: "فاهيتا دجاج متبلة مع الفلفل والجبنة", img: "https://images.unsplash.com/photo-1621800043295-a73fe2f76e2c?w=200&q=80" },
+      { id: 17, category: "sandwiches", name: "سندويشة غواصة", price: 26000, desc: "سندويشة غواصة غنية بقطع الدجاج والجبن السائح", img: "https://images.unsplash.com/photo-1619096252214-efc6714e384e?w=200&q=80" },
+      { id: 18, category: "sandwiches", name: "سندويشة بطاطا", price: 15000, desc: "بطاطا مقلية مع المخلل والثوم وصوص الكاتشب", img: "https://images.unsplash.com/photo-1585238342024-78d387f4a707?w=200&q=80" }
+    ];
+
+    let cart = {};
+
+    function renderMenu(filter = 'all') {
+      const container = document.getElementById('menu-container');
+      container.innerHTML = '';
+      const categories = [
+        { id: 'burgers', title: '🍔 قسم البرغر' },
+        { id: 'meals', title: '🍟 قسم الوجبات' },
+        { id: 'sandwiches', title: '🥖 قسم السندويشات' }
+      ];
+
+      categories.forEach(cat => {
+        if (filter !== 'all' && filter !== cat.id) return;
+        const items = menuData.filter(i => i.category === cat.id);
+        if (items.length === 0) return;
+
+        const section = document.createElement('div');
+        section.innerHTML = `
+          <div class="section-title"><span></span>${cat.title}</div>
+          <div class="items-grid" id="grid-${cat.id}"></div>
+        `;
+        container.appendChild(section);
+
+        const grid = section.querySelector(`#grid-${cat.id}`);
+        items.forEach(item => {
+          const qty = cart[item.id] || 0;
+          const card = document.createElement('div');
+          card.className = 'item-card';
+          card.innerHTML = `
+            <img src="${item.img}" class="item-img" alt="${item.name}" loading="lazy">
+            <div class="item-details">
+              <div class="item-name">${item.name}</div>
+              <div class="item-desc">${item.desc}</div>
+              <div class="item-price">${item.price.toLocaleString()} ل.س</div>
+            </div>
+            <div class="qty-controls">
+              <button class="btn
+    
