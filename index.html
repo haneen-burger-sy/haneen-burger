@@ -1,21 +1,21 @@
+
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="ar" dir="rtl" class="notranslate" translate="no">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>مطعم حنين برغر | المنيو والطلب السريع</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <meta name="google" content="notranslate">
+  <title>مطعم حنين برغر</title>
   <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
   <style>
     :root {
       --primary: #e63946;
       --accent: #f4a261;
-      --bg: #111113;
-      --card-bg: #1c1c21;
+      --bg: #121214;
+      --card-bg: #1e1e24;
       --text: #ffffff;
-      --text-muted: #a0a0aa;
-      --border: #2e2e38;
+      --text-muted: #9e9ea7;
+      --border: #2c2c36;
       --success: #25d366;
     }
     * {
@@ -23,17 +23,16 @@
       margin: 0;
       padding: 0;
       font-family: 'Cairo', sans-serif;
-      -webkit-tap-highlight-color: transparent;
     }
     body {
       background-color: var(--bg);
       color: var(--text);
-      padding-bottom: 90px;
+      padding-bottom: 100px;
     }
     header {
-      background: linear-gradient(180deg, rgba(230, 57, 70, 0.25) 0%, rgba(17, 17, 19, 0.95) 100%), #16161a;
+      background: linear-gradient(180deg, rgba(230, 57, 70, 0.3) 0%, #121214 100%);
       text-align: center;
-      padding: 30px 16px 20px;
+      padding: 26px 16px 16px;
       border-bottom: 1px solid var(--border);
     }
     .badge {
@@ -44,38 +43,35 @@
       border-radius: 20px;
       font-size: 0.85rem;
       font-weight: 700;
-      margin-bottom: 10px;
+      margin-bottom: 8px;
       border: 1px solid rgba(244, 162, 97, 0.3);
     }
     header h1 {
       font-size: 2rem;
       font-weight: 900;
-      color: #fff;
-      margin-bottom: 6px;
+      margin-bottom: 4px;
     }
     header p {
       color: var(--text-muted);
-      font-size: 0.95rem;
+      font-size: 0.9rem;
     }
     .categories-bar {
       position: sticky;
       top: 0;
       z-index: 50;
-      background: rgba(17, 17, 19, 0.95);
+      background: rgba(18, 18, 20, 0.95);
       backdrop-filter: blur(8px);
       display: flex;
       gap: 8px;
       padding: 12px 16px;
       overflow-x: auto;
-      scrollbar-width: none;
       border-bottom: 1px solid var(--border);
     }
-    .categories-bar::-webkit-scrollbar { display: none; }
     .cat-btn {
-      background: #23232b;
+      background: #22222b;
       color: var(--text-muted);
       border: 1px solid var(--border);
-      padding: 8px 18px;
+      padding: 7px 16px;
       border-radius: 30px;
       white-space: nowrap;
       font-size: 0.9rem;
@@ -88,123 +84,129 @@
       border-color: var(--primary);
     }
     .container {
-      max-width: 650px;
+      max-width: 600px;
       margin: 0 auto;
       padding: 16px;
     }
-    .section-title {
-      font-size: 1.3rem;
+    .section-head {
+      font-size: 1.25rem;
       font-weight: 800;
-      margin: 20px 0 12px;
+      margin: 22px 0 12px;
       display: flex;
       align-items: center;
       gap: 8px;
+      color: #fff;
     }
-    .section-title span {
-      background: var(--primary);
+    .section-head::before {
+      content: '';
       width: 4px;
-      height: 20px;
-      border-radius: 4px;
+      height: 18px;
+      background: var(--primary);
+      border-radius: 3px;
       display: inline-block;
-    }
-    .items-grid {
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
     }
     .item-card {
       background: var(--card-bg);
       border-radius: 14px;
       padding: 12px;
       display: flex;
-      gap: 14px;
+      gap: 12px;
       align-items: center;
       border: 1px solid var(--border);
+      margin-bottom: 12px;
     }
     .item-img {
-      width: 85px;
-      height: 85px;
+      width: 80px;
+      height: 80px;
       border-radius: 10px;
       object-fit: cover;
       flex-shrink: 0;
+      background: #2a2a34;
     }
     .item-details { flex-grow: 1; }
-    .item-name { font-size: 1.05rem; font-weight: 700; margin-bottom: 4px; }
-    .item-desc { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 6px; }
-    .item-price { color: var(--accent); font-weight: 800; font-size: 0.95rem; }
-    .qty-controls { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
+    .item-name { font-size: 1rem; font-weight: 800; margin-bottom: 3px; }
+    .item-desc { font-size: 0.78rem; color: var(--text-muted); margin-bottom: 6px; line-height: 1.3; }
+    .item-price { color: var(--accent); font-weight: 800; font-size: 0.92rem; }
+    .qty-box {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-shrink: 0;
+    }
     .btn-qty {
       width: 32px;
       height: 32px;
       border-radius: 8px;
       border: none;
-      background: #2e2e3a;
+      background: #2b2b36;
       color: #fff;
-      font-size: 1.1rem;
+      font-size: 1.2rem;
       font-weight: 700;
       cursor: pointer;
     }
     .btn-qty.plus { background: var(--primary); }
-    .qty-display { font-weight: 700; font-size: 1rem; min-width: 18px; text-align: center; }
+    .qty-val { font-weight: 800; min-width: 18px; text-align: center; }
+
+    /* Cart Bar */
     .cart-bar {
       position: fixed;
       bottom: 0;
       left: 0;
       right: 0;
-      background: #18181e;
+      background: #18181f;
       border-top: 1px solid var(--border);
       padding: 12px 20px;
       display: flex;
       justify-content: space-between;
       align-items: center;
       z-index: 100;
-      max-width: 650px;
+      max-width: 600px;
       margin: 0 auto;
+      box-shadow: 0 -4px 15px rgba(0,0,0,0.5);
     }
-    .cart-count { font-size: 0.85rem; color: var(--text-muted); }
-    .cart-total { font-size: 1.15rem; font-weight: 900; color: var(--accent); }
-    .btn-checkout {
+    .cart-btn-send {
       background: var(--success);
       color: #fff;
       border: none;
       padding: 10px 20px;
       border-radius: 10px;
+      font-weight: 800;
       font-size: 0.95rem;
-      font-weight: 700;
       cursor: pointer;
     }
-    .modal-overlay {
+
+    /* Modal */
+    .modal {
       display: none;
       position: fixed;
       top: 0; left: 0; right: 0; bottom: 0;
-      background: rgba(0,0,0,0.75);
+      background: rgba(0,0,0,0.8);
       z-index: 200;
       justify-content: center;
       align-items: flex-end;
     }
-    .modal-overlay.active { display: flex; }
-    .modal-content {
-      background: #1c1c24;
+    .modal.active { display: flex; }
+    .modal-box {
+      background: #1e1e24;
       border-radius: 20px 20px 0 0;
       width: 100%;
       max-width: 600px;
-      padding: 22px 20px 30px;
+      padding: 24px 20px 32px;
       border-top: 2px solid var(--primary);
     }
-    .modal-title { font-size: 1.2rem; font-weight: 800; margin-bottom: 14px; text-align: center; }
-    .form-group { margin-bottom: 12px; }
-    .form-group label { display: block; font-size: 0.85rem; color: var(--text-muted); margin-bottom: 5px; }
-    .form-group input, .form-group textarea {
+    .form-input {
       width: 100%;
-      padding: 10px 14px;
-      background: #252530;
+      padding: 11px 14px;
+      margin: 8px 0 14px;
+      background: #282832;
       border: 1px solid var(--border);
       border-radius: 8px;
       color: #fff;
+      font-size: 0.95rem;
     }
-    .modal-actions { display: flex; gap: 10px; margin-top: 18px; }
-    .btn-confirm { flex: 2; background: var(--success); color: #fff; border: none; padding: 12px; border-radius: 10px; font-weight: 800; cursor: pointer; }
-    .btn-cancel { flex: 1; background: #2e2e3a; color: #ddd; border: none; padding: 12px; border-radius: 10px; font-weight: 700; cursor: pointer; }
+    .modal-btns { display: flex; gap: 10px; margin-top: 10px; }
+    .btn-submit { flex: 2; background: var(--success); color: #fff; border: none; padding: 13px; border-radius: 10px; font-weight: 800; cursor: pointer; }
+    .btn-close { flex: 1; background: #2f2f3d; color: #fff; border: none; padding: 13px; border-radius: 10px; font-weight: 700; cursor: pointer; }
   </style>
 </head>
 <body>
@@ -216,42 +218,141 @@
   </header>
 
   <div class="categories-bar">
-    <button class="cat-btn active" onclick="filterCategory('all')">الكل</button>
-    <button class="cat-btn" onclick="filterCategory('burgers')">🍔 البرغر</button>
-    <button class="cat-btn" onclick="filterCategory('meals')">🍟 الوجبات</button>
-    <button class="cat-btn" onclick="filterCategory('sandwiches')">🥖 السندويشات</button>
+    <button class="cat-btn active" onclick="showCategory('all', this)">الكل</button>
+    <button class="cat-btn" onclick="showCategory('burgers', this)">🍔 البرغر</button>
+    <button class="cat-btn" onclick="showCategory('meals', this)">🍟 الوجبات</button>
+    <button class="cat-btn" onclick="showCategory('sandwiches', this)">🥖 السندويشات</button>
   </div>
 
-  <div class="container" id="menu-container"></div>
-
-  <div class="cart-bar" id="cart-bar" style="display: none;">
-    <div class="cart-info">
-      <span class="cart-count" id="cart-count">0 وجبات</span>
-      <span class="cart-total" id="cart-total">0 ل.س</span>
+  <div class="container">
+    <!-- قسم البرغر -->
+    <div class="cat-group" id="group-burgers">
+      <div class="section-head">قسم البرغر</div>
+      <div class="item-card" data-cat="burgers" data-name="برغر لحم" data-price="35000">
+        <img class="item-img" src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=200&q=80" alt="برغر لحم">
+        <div class="item-details"><div class="item-name">برغر لحم</div><div class="item-desc">لحم عجل طازج متبل مع الصوص والجبن</div><div class="item-price">35,000 ل.س</div></div>
+        <div class="qty-box"><button class="btn-qty" onclick="changeQty(this, -1)">-</button><span class="qty-val">0</span><button class="btn-qty plus" onclick="changeQty(this, 1)">+</button></div>
+      </div>
+      <div class="item-card" data-cat="burgers" data-name="برغر جاج" data-price="30000">
+        <img class="item-img" src="https://images.unsplash.com/photo-1615297928064-24977384d0ec?w=200&q=80" alt="برغر جاج">
+        <div class="item-details"><div class="item-name">برغر جاج</div><div class="item-desc">صدر دجاج مقرمش مع الجبنة والخس الطازج</div><div class="item-price">30,000 ل.س</div></div>
+        <div class="qty-box"><button class="btn-qty" onclick="changeQty(this, -1)">-</button><span class="qty-val">0</span><button class="btn-qty plus" onclick="changeQty(this, 1)">+</button></div>
+      </div>
+      <div class="item-card" data-cat="burgers" data-name="برغر تشيلي" data-price="34000">
+        <img class="item-img" src="https://images.unsplash.com/photo-1586190848861-99aa4a171e90?w=200&q=80" alt="برغر تشيلي">
+        <div class="item-details"><div class="item-name">برغر تشيلي</div><div class="item-desc">برغر بنكهة صوص التشيلي الحار الشهي</div><div class="item-price">34,000 ل.س</div></div>
+        <div class="qty-box"><button class="btn-qty" onclick="changeQty(this, -1)">-</button><span class="qty-val">0</span><button class="btn-qty plus" onclick="changeQty(this, 1)">+</button></div>
+      </div>
+      <div class="item-card" data-cat="burgers" data-name="برغر مكس" data-price="38000">
+        <img class="item-img" src="https://images.unsplash.com/photo-1550547660-d9450f859349?w=200&q=80" alt="برغر مكس">
+        <div class="item-details"><div class="item-name">برغر مكس</div><div class="item-desc">مزيج اللحم والدجاج مع الخضار والجبن</div><div class="item-price">38,000 ل.س</div></div>
+        <div class="qty-box"><button class="btn-qty" onclick="changeQty(this, -1)">-</button><span class="qty-val">0</span><button class="btn-qty plus" onclick="changeQty(this, 1)">+</button></div>
+      </div>
+      <div class="item-card" data-cat="burgers" data-name="برغر امريكانا" data-price="36000">
+        <img class="item-img" src="https://images.unsplash.com/photo-1572802419224-296b0aeee0d9?w=200&q=80" alt="برغر امريكانا">
+        <div class="item-details"><div class="item-name">برغر امريكانا</div><div class="item-desc">برغر كلاسيك على الطريقة الأمريكية</div><div class="item-price">36,000 ل.س</div></div>
+        <div class="qty-box"><button class="btn-qty" onclick="changeQty(this, -1)">-</button><span class="qty-val">0</span><button class="btn-qty plus" onclick="changeQty(this, 1)">+</button></div>
+      </div>
+      <div class="item-card" data-cat="burgers" data-name="برغر زنجر" data-price="32000">
+        <img class="item-img" src="https://images.unsplash.com/photo-1525059696034-4967a8e1dca2?w=200&q=80" alt="برغر زنجر">
+        <div class="item-details"><div class="item-name">برغر زنجر</div><div class="item-desc">فيليه دجاج زنجر حار ومقرمش مع الصوص</div><div class="item-price">32,000 ل.س</div></div>
+        <div class="qty-box"><button class="btn-qty" onclick="changeQty(this, -1)">-</button><span class="qty-val">0</span><button class="btn-qty plus" onclick="changeQty(this, 1)">+</button></div>
+      </div>
     </div>
-    <button class="btn-checkout" onclick="openCheckoutModal()">
-      <span>إتمام الطلب عبر واتساب 💬</span>
-    </button>
+
+    <!-- قسم الوجبات -->
+    <div class="cat-group" id="group-meals">
+      <div class="section-head">قسم الوجبات</div>
+      <div class="item-card" data-cat="meals" data-name="وجبة فاهيتا" data-price="42000">
+        <img class="item-img" src="https://images.unsplash.com/photo-1544025162-d76694265947?w=200&q=80" alt="وجبة فاهيتا">
+        <div class="item-details"><div class="item-name">وجبة فاهيتا</div><div class="item-desc">دجاج فاهيتا مع البطاطا المقلية والمقبلات</div><div class="item-price">42,000 ل.س</div></div>
+        <div class="qty-box"><button class="btn-qty" onclick="changeQty(this, -1)">-</button><span class="qty-val">0</span><button class="btn-qty plus" onclick="changeQty(this, 1)">+</button></div>
+      </div>
+      <div class="item-card" data-cat="meals" data-name="وجبة مكسيكانو" data-price="42000">
+        <img class="item-img" src="https://images.unsplash.com/photo-1626700051175-6818013e1d4f?w=200&q=80" alt="وجبة مكسيكانو">
+        <div class="item-details"><div class="item-name">وجبة مكسيكانو</div><div class="item-desc">خلطة مكسيكانو حارة مع البطاطا والصوصات</div><div class="item-price">42,000 ل.س</div></div>
+        <div class="qty-box"><button class="btn-qty" onclick="changeQty(this, -1)">-</button><span class="qty-val">0</span><button class="btn-qty plus" onclick="changeQty(this, 1)">+</button></div>
+      </div>
+      <div class="item-card" data-cat="meals" data-name="وجبة غواصة" data-price="45000">
+        <img class="item-img" src="https://images.unsplash.com/photo-1555939594-58d7cb561ad1?w=200&q=80" alt="وجبة غواصة">
+        <div class="item-details"><div class="item-name">وجبة غواصة</div><div class="item-desc">وجبة غواصة غنية بالجبن السائح والبطاطا</div><div class="item-price">45,000 ل.س</div></div>
+        <div class="qty-box"><button class="btn-qty" onclick="changeQty(this, -1)">-</button><span class="qty-val">0</span><button class="btn-qty plus" onclick="changeQty(this, 1)">+</button></div>
+      </div>
+      <div class="item-card" data-cat="meals" data-name="وجبة كريسبي" data-price="45000">
+        <img class="item-img" src="https://images.unsplash.com/photo-1626082927389-6cd097cdc6ec?w=200&q=80" alt="وجبة كريسبي">
+        <div class="item-details"><div class="item-name">وجبة كريسبي</div><div class="item-desc">قطع كريسبي ذهبية مقرمشة مع الثوم والبطاطا</div><div class="item-price">45,000 ل.س</div></div>
+        <div class="qty-box"><button class="btn-qty" onclick="changeQty(this, -1)">-</button><span class="qty-val">0</span><button class="btn-qty plus" onclick="changeQty(this, 1)">+</button></div>
+      </div>
+      <div class="item-card" data-cat="meals" data-name="وجبة سبايسي" data-price="45000">
+        <img class="item-img" src="https://images.unsplash.com/photo-1562967914-608f82629710?w=200&q=80" alt="وجبة سبايسي">
+        <div class="item-details"><div class="item-name">وجبة سبايسي</div><div class="item-desc">قطع مقرمشة بتتبيلة سبايسي حارة ومميزة</div><div class="item-price">45,000 ل.س</div></div>
+        <div class="qty-box"><button class="btn-qty" onclick="changeQty(this, -1)">-</button><span class="qty-val">0</span><button class="btn-qty plus" onclick="changeQty(this, 1)">+</button></div>
+      </div>
+      <div class="item-card" data-cat="meals" data-name="وجبة زنجر" data-price="45000">
+        <img class="item-img" src="https://images.unsplash.com/photo-1513185158878-8d8c2a2a3da3?w=200&q=80" alt="وجبة زنجر">
+        <div class="item-details"><div class="item-name">وجبة زنجر</div><div class="item-desc">وجبة زنجر شهية مع بطاطا وسلطة وصوص</div><div class="item-price">45,000 ل.س</div></div>
+        <div class="qty-box"><button class="btn-qty" onclick="changeQty(this, -1)">-</button><span class="qty-val">0</span><button class="btn-qty plus" onclick="changeQty(this, 1)">+</button></div>
+      </div>
+      <div class="item-card" data-cat="meals" data-name="وجبة بطاطا" data-price="20000">
+        <img class="item-img" src="https://images.unsplash.com/photo-1573080496219-bb080dd4f877?w=200&q=80" alt="وجبة بطاطا">
+        <div class="item-details"><div class="item-name">وجبة بطاطا</div><div class="item-desc">صحن بطاطا مقلية كبير مقرمش مع الثوم والكاتشب</div><div class="item-price">20,000 ل.س</div></div>
+        <div class="qty-box"><button class="btn-qty" onclick="changeQty(this, -1)">-</button><span class="qty-val">0</span><button class="btn-qty plus" onclick="changeQty(this, 1)">+</button></div>
+      </div>
+    </div>
+
+    <!-- قسم السندويشات -->
+    <div class="cat-group" id="group-sandwiches">
+      <div class="section-head">قسم السندويشات</div>
+      <div class="item-card" data-cat="sandwiches" data-name="سندويشة كريسبي" data-price="25000">
+        <img class="item-img" src="https://images.unsplash.com/photo-1528735602780-2552fd46c7af?w=200&q=80" alt="سندويشة كريسبي">
+        <div class="item-details"><div class="item-name">سندويشة كريسبي</div><div class="item-desc">كريسبي دجاج مقرمش مع المايونيز والخس الطازج</div><div class="item-price">25,000 ل.س</div></div>
+        <div class="qty-box"><button class="btn-qty" onclick="changeQty(this, -1)">-</button><span class="qty-val">0</span><button class="btn-qty plus" onclick="changeQty(this, 1)">+</button></div>
+      </div>
+      <div class="item-card" data-cat="sandwiches" data-name="سندويشة سبايسي" data-price="25000">
+        <img class="item-img" src="https://images.unsplash.com/photo-1509722747041-616f39b57569?w=200&q=80" alt="سندويشة سبايسي">
+        <div class="item-details"><div class="item-name">سندويشة سبايسي</div><div class="item-desc">دجاج مقرمش متبل بخلطة حارة مع الصوص والمخلل</div><div class="item-price">25,000 ل.س</div></div>
+        <div class="qty-box"><button class="btn-qty" onclick="changeQty(this, -1)">-</button><span class="qty-val">0</span><button class="btn-qty plus" onclick="changeQty(this, 1)">+</button></div>
+      </div>
+      <div class="item-card" data-cat="sandwiches" data-name="سندويشة فاهيتا" data-price="25000">
+        <img class="item-img" src="https://images.unsplash.com/photo-1621800043295-a73fe2f76e2c?w=200&q=80" alt="سندويشة فاهيتا">
+        <div class="item-details"><div class="item-name">سندويشة فاهيتا</div><div class="item-desc">فاهيتا دجاج متبلة مع الفلفل الرومي والجبنة</div><div class="item-price">25,000 ل.س</div></div>
+        <div class="qty-box"><button class="btn-qty" onclick="changeQty(this, -1)">-</button><span class="qty-val">0</span><button class="btn-qty plus" onclick="changeQty(this, 1)">+</button></div>
+      </div>
+      <div class="item-card" data-cat="sandwiches" data-name="سندويشة غواصة" data-price="26000">
+        <img class="item-img" src="https://images.unsplash.com/photo-1619096252214-efc6714e384e?w=200&q=80" alt="سندويشة غواصة">
+        <div class="item-details"><div class="item-name">سندويشة غواصة</div><div class="item-desc">قطع الدجاج اللذيذة مع الجبن السائح في خبز طري</div><div class="item-price">26,000 ل.س</div></div>
+        <div class="qty-box"><button class="btn-qty" onclick="changeQty(this, -1)">-</button><span class="qty-val">0</span><button class="btn-qty plus" onclick="changeQty(this, 1)">+</button></div>
+      </div>
+      <div class="item-card" data-cat="sandwiches" data-name="سندويشة بطاطا" data-price="15000">
+        <img class="item-img" src="https://images.unsplash.com/photo-1585238342024-78d387f4a707?w=200&q=80" alt="سندويشة بطاطا">
+        <div class="item-details"><div class="item-name">سندويشة بطاطا</div><div class="item-desc">بطاطا مقلية مقرمشة مع المخلل والثوم والكاتشب</div><div class="item-price">15,000 ل.س</div></div>
+        <div class="qty-box"><button class="btn-qty" onclick="changeQty(this, -1)">-</button><span class="qty-val">0</span><button class="btn-qty plus" onclick="changeQty(this, 1)">+</button></div>
+      </div>
+    </div>
   </div>
 
-  <div class="modal-overlay" id="checkout-modal">
-    <div class="modal-content">
-      <h3 class="modal-title">تفاصيل الطلب والتوصيل</h3>
-      <div class="form-group">
-        <label>اسم الزبون الكريم *</label>
-        <input type="text" id="cust-name" placeholder="أدخل اسمك" required>
-      </div>
-      <div class="form-group">
-        <label>العنوان / رقم الطاولة أو سفري *</label>
-        <input type="text" id="cust-address" placeholder="مثال: سرمدا - أو طاولة 3" required>
-      </div>
-      <div class="form-group">
-        <label>ملاحظات إضافية على الطلب</label>
-        <textarea id="cust-notes" rows="2" placeholder="مثلاً: بدون مخلل، زيادة ثومية..."></textarea>
-      </div>
-      <div class="modal-actions">
-        <button class="btn-confirm" onclick="sendOrderToWhatsApp()">إرسال الطلب الآن 🚀</button>
-        <button class="btn-cancel" onclick="closeCheckoutModal()">رجوع</button>
+  <!-- سلة المشتريات -->
+  <div class="cart-bar" id="cart-bar" style="display: none;">
+    <div>
+      <div style="font-size: 0.8rem; color: #a0a0aa;" id="cart-count">0 طلبات</div>
+      <div style="font-size: 1.15rem; font-weight: 900; color: #f4a261;" id="cart-total">0 ل.س</div>
+    </div>
+    <button class="cart-btn-send" onclick="toggleModal(true)">إتمام الطلب عبر واتساب 💬</button>
+  </div>
+
+  <!-- نافذة الزبون -->
+  <div class="modal" id="order-modal">
+    <div class="modal-box">
+      <h3 style="text-align: center; margin-bottom: 15px;">بيانات استلام الطلب</h3>
+      <label style="font-size: 0.85rem; color: #a0a0aa;">اسم الزبون الكريم *</label>
+      <input type="text" id="cust-name" class="form-input" placeholder="اكتب اسمك">
+      <label style="font-size: 0.85rem; color: #a0a0aa;">العنوان / رقم الطاولة أو سفري *</label>
+      <input type="text" id="cust-address" class="form-input" placeholder="مثلاً: سرمدا، أو طاولة 4">
+      <label style="font-size: 0.85rem; color: #a0a0aa;">ملاحظات خاصة</label>
+      <input type="text" id="cust-notes" class="form-input" placeholder="مثلاً: بدون مخلل، زيادة ثوم...">
+      <div class="modal-btns">
+        <button class="btn-submit" onclick="sendOrder()">إرسال الطلب الآن 🚀</button>
+        <button class="btn-close" onclick="toggleModal(false)">إلغاء</button>
       </div>
     </div>
   </div>
@@ -259,62 +360,92 @@
   <script>
     const RESTAURANT_PHONE = "963938671515";
 
-    const menuData = [
-      { id: 1, category: "burgers", name: "برغر لحم", price: 35000, desc: "لحم عجل طازج متبل مع صوص البرغر الخاص والخس", img: "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=200&q=80" },
-      { id: 2, category: "burgers", name: "برغر جاج", price: 30000, desc: "صدر دجاج شهي مقرمش مع الجبنة والخس", img: "https://images.unsplash.com/photo-1615297928064-24977384d0ec?w=200&q=80" },
-      { id: 3, category: "burgers", name: "برغر تشيلي", price: 34000, desc: "برغر غني بصوص التشيلي الحار اللذيذ", img: "https://images.unsplash.com/photo-1586190848861-99aa4a171e90?w=200&q=80" },
-      { id: 4, category: "burgers", name: "برغر مكس", price: 38000, desc: "مزيج فاخر من اللحم والدجاج مع الخضار والجبنة", img: "https://images.unsplash.com/photo-1550547660-d9450f859349?w=200&q=80" },
-      { id: 5, category: "burgers", name: "برغر امريكانا", price: 36000, desc: "برغر كلاسيكي على الطريقة الأمريكية الأصلية", img: "https://images.unsplash.com/photo-1572802419224-296b0aeee0d9?w=200&q=80" },
-      { id: 6, category: "burgers", name: "برغر زنجر", price: 32000, desc: "فيليه دجاج زنجر مقرمش سبايسي مع الصوص", img: "https://images.unsplash.com/photo-1525059696034-4967a8e1dca2?w=200&q=80" },
-      { id: 7, category: "meals", name: "وجبة فاهيتا", price: 42000, desc: "دجاج فاهيتا متبل بالخضار يقدم مع البطاطا والصوص", img: "https://images.unsplash.com/photo-1544025162-d76694265947?w=200&q=80" },
-      { id: 8, category: "meals", name: "وجبة مكسيكانو", price: 42000, desc: "خلطة مكسيكانو حارة وشهية مع بطاطا مقرمشة ومقبلات", img: "https://images.unsplash.com/photo-1626700051175-6818013e1d4f?w=200&q=80" },
-      { id: 9, category: "meals", name: "وجبة غواصة", price: 45000, desc: "وجبة دجاج غواصة غنية بالجبن الذائب والبطاطا", img: "https://images.unsplash.com/photo-1555939594-58d7cb561ad1?w=200&q=80" },
-      { id: 10, category: "meals", name: "وجبة كريسبي", price: 45000, desc: "قطع كريسبي دجاج ذهبية مقرمشة مع البطاطا والثومية", img: "https://images.unsplash.com/photo-1626082927389-6cd097cdc6ec?w=200&q=80" },
-      { id: 11, category: "meals", name: "وجبة سبايسي", price: 45000, desc: "قطع دجاج مقرمشة بتتبيلة حارة جداً ومميزة", img: "https://images.unsplash.com/photo-1562967914-608f82629710?w=200&q=80" },
-      { id: 12, category: "meals", name: "وجبة زنجر", price: 45000, desc: "وجبة زنجر حارة مع بطاطا صوابع ومقبلات وكولسلو", img: "https://images.unsplash.com/photo-1513185158878-8d8c2a2a3da3?w=200&q=80" },
-      { id: 13, category: "meals", name: "وجبة بطاطا", price: 20000, desc: "صحن بطاطا مقلية مقرمشة كبير مع الثوم والكاتشب", img: "https://images.unsplash.com/photo-1573080496219-bb080dd4f877?w=200&q=80" },
-      { id: 14, category: "sandwiches", name: "سندويشة كريسبي", price: 25000, desc: "كريسبي دجاج مقرمش مع المايونيز والخس", img: "https://images.unsplash.com/photo-1528735602780-2552fd46c7af?w=200&q=80" },
-      { id: 15, category: "sandwiches", name: "سندويشة سبايسي", price: 25000, desc: "دجاج متبل بخلطة حارة مع الصوص والمخلل", img: "https://images.unsplash.com/photo-1509722747041-616f39b57569?w=200&q=80" },
-      { id: 16, category: "sandwiches", name: "سندويشة فاهيتا", price: 25000, desc: "فاهيتا دجاج متبلة مع الفلفل والجبنة", img: "https://images.unsplash.com/photo-1621800043295-a73fe2f76e2c?w=200&q=80" },
-      { id: 17, category: "sandwiches", name: "سندويشة غواصة", price: 26000, desc: "سندويشة غواصة غنية بقطع الدجاج والجبن السائح", img: "https://images.unsplash.com/photo-1619096252214-efc6714e384e?w=200&q=80" },
-      { id: 18, category: "sandwiches", name: "سندويشة بطاطا", price: 15000, desc: "بطاطا مقلية مع المخلل والثوم وصوص الكاتشب", img: "https://images.unsplash.com/photo-1585238342024-78d387f4a707?w=200&q=80" }
-    ];
+    function showCategory(cat, btn) {
+      document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      const groups = document.querySelectorAll('.cat-group');
+      groups.forEach(g => {
+        if (cat === 'all' || g.id === 'group-' + cat) {
+          g.style.display = 'block';
+        } else {
+          g.style.display = 'none';
+        }
+      });
+    }
 
-    let cart = {};
+    function changeQty(btn, delta) {
+      const box = btn.parentElement;
+      const display = box.querySelector('.qty-val');
+      let val = parseInt(display.innerText) + delta;
+      if (val < 0) val = 0;
+      display.innerText = val;
+      updateCart();
+    }
 
-    function renderMenu(filter = 'all') {
-      const container = document.getElementById('menu-container');
-      container.innerHTML = '';
-      const categories = [
-        { id: 'burgers', title: '🍔 قسم البرغر' },
-        { id: 'meals', title: '🍟 قسم الوجبات' },
-        { id: 'sandwiches', title: '🥖 قسم السندويشات' }
-      ];
+    function updateCart() {
+      let count = 0;
+      let total = 0;
+      document.querySelectorAll('.item-card').forEach(card => {
+        const qty = parseInt(card.querySelector('.qty-val').innerText);
+        const price = parseInt(card.getAttribute('data-price'));
+        if (qty > 0) {
+          count += qty;
+          total += (qty * price);
+        }
+      });
 
-      categories.forEach(cat => {
-        if (filter !== 'all' && filter !== cat.id) return;
-        const items = menuData.filter(i => i.category === cat.id);
-        if (items.length === 0) return;
+      const bar = document.getElementById('cart-bar');
+      if (count > 0) {
+        bar.style.display = 'flex';
+        document.getElementById('cart-count').innerText = count + ' وجبات مختارة';
+        document.getElementById('cart-total').innerText = total.toLocaleString() + ' ل.س';
+      } else {
+        bar.style.display = 'none';
+      }
+    }
 
-        const section = document.createElement('div');
-        section.innerHTML = `
-          <div class="section-title"><span></span>${cat.title}</div>
-          <div class="items-grid" id="grid-${cat.id}"></div>
-        `;
-        container.appendChild(section);
+    function toggleModal(open) {
+      document.getElementById('order-modal').classList.toggle('active', open);
+    }
 
-        const grid = section.querySelector(`#grid-${cat.id}`);
-        items.forEach(item => {
-          const qty = cart[item.id] || 0;
-          const card = document.createElement('div');
-          card.className = 'item-card';
-          card.innerHTML = `
-            <img src="${item.img}" class="item-img" alt="${item.name}" loading="lazy">
-            <div class="item-details">
-              <div class="item-name">${item.name}</div>
-              <div class="item-desc">${item.desc}</div>
-              <div class="item-price">${item.price.toLocaleString()} ل.س</div>
-            </div>
-            <div class="qty-controls">
-              <button class="btn
-    
+    function sendOrder() {
+      const name = document.getElementById('cust-name').value.trim();
+      const address = document.getElementById('cust-address').value.trim();
+      const notes = document.getElementById('cust-notes').value.trim();
+
+      if (!name || !address) {
+        alert('يرجى كتابة الاسم والعنوان للمتابعة');
+        return;
+      }
+
+      let itemsText = "";
+      let total = 0;
+
+      document.querySelectorAll('.item-card').forEach(card => {
+        const qty = parseInt(card.querySelector('.qty-val').innerText);
+        const price = parseInt(card.getAttribute('data-price'));
+        const name = card.getAttribute('data-name');
+        if (qty > 0) {
+          const itemTotal = qty * price;
+          total += itemTotal;
+          itemsText += '▫️ ' + qty + ' × ' + name + ' (' + itemTotal.toLocaleString() + ' ل.س)\n';
+        }
+      });
+
+      const msg = 
+`🍔 *طلب جديد من مطعم حنين برغر* 🍔
+━━━━━━━━━━━━━━━
+👤 *الزبون:* ${name}
+📍 *العنوان:* ${address}
+${notes ? `📝 *ملاحظات:* ${notes}\n` : ''}━━━━━━━━━━━━━━━
+🛒 *تفاصيل الوجبات:*
+${itemsText}━━━━━━━━━━━━━━━
+💰 *المجموع:* ${total.toLocaleString()} ليرة سورية
+━━━━━━━━━━━━━━━`;
+
+      window.open('https://wa.me/' + RESTAURANT_PHONE + '?text=' + encodeURIComponent(msg), '_blank');
+      toggleModal(false);
+    }
+  </script>
+</body>
+</html>
