@@ -46,7 +46,7 @@
       box-shadow: 0 4px 20px rgba(0,0,0,0.15);
     }
 
-    /* الشعار المخصص المفرغ */
+    /* الشعار المفرغ الأصلي */
     .logo-wrapper {
       width: 95px;
       height: 105px;
@@ -472,7 +472,7 @@
 
   <!-- Header -->
   <header>
-    <!-- اللوغو الأصلي المطابق تماماً لصورتك -->
+    <!-- اللوغو الأصلي المفرغ -->
     <div class="logo-wrapper">
       <svg viewBox="0 0 200 220" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
         <defs>
@@ -491,7 +491,7 @@
         <path d="M 110,57 C 112,53 118,53 120,57" fill="none" stroke="#f5a623" stroke-width="3.5" stroke-linecap="round" />
         <path d="M 94,62 C 96,67 104,67 106,62" fill="none" stroke="#f5a623" stroke-width="3.5" stroke-linecap="round" />
 
-        <!-- كلمة حنين بالخط الأبيض الأصلي -->
+        <!-- كلمة حنين الأصلية -->
         <text x="100" y="112" text-anchor="middle" fill="#ffffff" font-family="'Cairo', sans-serif" font-weight="900" font-size="36">حنين</text>
 
         <!-- تفاصيل البرغر السفلية -->
@@ -554,17 +554,25 @@
 
         <hr style="border: none; border-top: 1px dashed var(--border-color); margin: 16px 0;">
 
-        <!-- بيانات الزبون -->
+        <!-- 1. الاسم -->
         <div class="form-group">
           <label>👤 الاسم الكريم:</label>
           <input type="text" id="custName" placeholder="مثال: محمود" required>
         </div>
+
+        <!-- 2. الرقم -->
+        <div class="form-group">
+          <label>📞 رقم الهاتف (للتواصل والتأكيد):</label>
+          <input type="tel" id="custPhone" placeholder="مثال: 0938123456" dir="ltr" style="text-align: right;" required>
+        </div>
         
+        <!-- 3. العنوان -->
         <div class="form-group">
           <label>📍 العنوان أو مكان التوصيل:</label>
           <input type="text" id="custAddress" placeholder="مثال: الدانا - جانب الجامع الكبير" required>
         </div>
 
+        <!-- 4. الملاحظات -->
         <div class="form-group">
           <label>📝 ملاحظات إضافية على الطلب:</label>
           <textarea id="custNotes" rows="2" placeholder="مثال: بلا توم، شطة زيادة، بدون مخلل..."></textarea>
@@ -769,6 +777,7 @@
       document.getElementById('modalTotal').textContent = `${totalPrice} ${currText}`;
     }
 
+    // إرسال الطلب عبر واتساب بالترتيب الدقيق: الاسم ثم الرقم ثم العنوان ثم الملاحظات
     function sendOrderWhatsApp() {
       if (Object.keys(cart).length === 0) {
         alert('يرجى اختيار وجبة واحدة على الأقل قبل إرسال الطلب.');
@@ -776,12 +785,19 @@
       }
 
       const name = document.getElementById('custName').value.trim();
+      const phone = document.getElementById('custPhone').value.trim();
       const address = document.getElementById('custAddress').value.trim();
       const notes = document.getElementById('custNotes').value.trim() || 'لا يوجد';
 
       if (!name) {
         alert('يرجى كتابة اسمك الكريم لتأكيد الطلب.');
         document.getElementById('custName').focus();
+        return;
+      }
+
+      if (!phone) {
+        alert('يرجى كتابة رقم الهاتف للتواصل.');
+        document.getElementById('custPhone').focus();
         return;
       }
 
@@ -806,9 +822,11 @@
         }
       }
 
+      // القالب المرتب بدقة
       let msg = `🍔 *طلب جديد من مطعم حنين برغر* 🍔%0A`;
       msg += `━━━━━━━━━━━━━━━%0A`;
       msg += `👤 *الزبون:* ${name}%0A`;
+      msg += `📞 *الرقم:* ${phone}%0A`;
       msg += `📍 *العنوان:* ${address}%0A`;
       msg += `📝 *ملاحظات:* ${notes}%0A`;
       msg += `━━━━━━━━━━━━━━━%0A`;
@@ -821,7 +839,7 @@
       window.open(`https://wa.me/963938671515?text=${msg}`, '_blank');
     }
 
-    // تشغيل مباشر فوري بدون أي تأخير أو شاشة بيضاء
+    // تشغيل مباشر
     renderMenu();
   </script>
 </body>
