@@ -588,11 +588,11 @@
   </div>
 
   <script>
-    // قائمة الأصناف
+    // قائمة أصناف المطعم والأسعار المحدثة
     const menuData = [
       // قسم البرغر
       { id: "b1", category: "burger", name: "برغر لحم", desc: "لحم عجل طازج متبل مع الصوص والجبن الخالص", priceSYP: 69000, priceTL: 230, img: "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=400&q=80" },
-      { id: "b2", category: "burger", name: "برغر جاج", desc: "صدر دجاج مقرمش مع الجبنة والخس الطازج", priceSYP: 54000, priceTL: 180, img: "https://images.unsplash.com/photo-1615297928064-24977384d0ec?w=400&q=80" },
+      { id: "b2", category: "burger", name: "برغر جاج", desc: "صدر دجاج مقرمش مع الجبنة والخس الطازج", priceSYP: 54000, priceTL: 180, img: "https://images.unsplash.com/photo-1606755962773-d324e0a13086?w=500&auto=format&fit=crop&q=80" },
       { id: "b3", category: "burger", name: "برغر تشيلي", desc: "برغر بنكهة صوص التشيلي الحار الشهي", priceSYP: 75000, priceTL: 250, img: "https://images.unsplash.com/photo-1586190848861-99aa4a171e90?w=400&q=80" },
       { id: "b4", category: "burger", name: "برغر امريكانا", desc: "برغر كلاسيك مميز على الطريقة الأمريكية", priceSYP: 75000, priceTL: 250, img: "https://images.unsplash.com/photo-1572802419224-296b0aeee0d9?w=400&q=80" },
       { id: "b5", category: "burger", name: "برغر مكس", desc: "مزيج اللحم والدجاج مع الخضار والجبن الشهي", priceSYP: 82500, priceTL: 275, img: "https://images.unsplash.com/photo-1550547660-d9450f859349?w=400&q=80" },
@@ -630,8 +630,7 @@
       drinks: "قسم المشروبات 🥤"
     };
 
-    // State Variables
-    let currentCurrency = "SYP"; // 'SYP' or 'TL'
+    let currentCurrency = "SYP";
     let activeCategory = "all";
     const cart = {};
 
@@ -639,7 +638,6 @@
       return num.toLocaleString('en-US');
     }
 
-    // Currency Switch Handler
     window.changeCurrency = function(curr) {
       currentCurrency = curr;
       document.getElementById("btnSYP").classList.toggle("active", curr === "SYP");
@@ -648,7 +646,6 @@
       updateCartBar();
     };
 
-    // Render Menu Items
     function renderMenu() {
       const container = document.getElementById("menuContainer");
       container.innerHTML = "";
@@ -696,7 +693,6 @@
       });
     }
 
-    // Change Item Quantity
     window.changeQty = function(id, delta) {
       const current = cart[id] || 0;
       const updated = current + delta;
@@ -711,7 +707,6 @@
       renderMenu();
     };
 
-    // Update Bottom Cart Bar
     function updateCartBar() {
       let totalQty = 0;
       let totalSYP = 0;
@@ -739,7 +734,6 @@
       }
     }
 
-    // Category Tabs Click
     document.querySelectorAll(".tab-btn").forEach(btn => {
       btn.addEventListener("click", () => {
         document.querySelectorAll(".tab-btn").forEach(b => b.classList.remove("active"));
@@ -749,7 +743,6 @@
       });
     });
 
-    // Modal Handling
     const modal = document.getElementById("checkoutModal");
     document.getElementById("openCheckoutBtn").addEventListener("click", () => {
       const listContainer = document.getElementById("modalItemsList");
@@ -807,7 +800,7 @@
       if (e.target === modal) modal.classList.remove("active");
     });
 
-    // Send to WhatsApp
+    // إرسال الطلب عبر الواتساب مباشرة لرقم المطعم
     document.getElementById("orderForm").addEventListener("submit", (e) => {
       e.preventDefault();
 
@@ -840,16 +833,13 @@
         orderText += `*ملاحظات:* ${notes}%0A`;
       }
 
-      // رقم واتساب المطعم
-      const restaurantNumber = ""; 
-      const whatsappUrl = restaurantNumber 
-        ? `https://wa.me/${restaurantNumber}?text=${orderText}` 
-        : `https://api.whatsapp.com/send?text=${orderText}`;
+      // رقم واتساب المطعم المباشر
+      const restaurantNumber = "963938671515"; 
+      const whatsappUrl = `https://wa.me/${restaurantNumber}?text=${orderText}`;
 
       window.open(whatsappUrl, "_blank");
     });
 
-    // Start
     renderMenu();
   </script>
 </body>
