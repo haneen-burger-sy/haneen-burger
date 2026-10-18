@@ -42,22 +42,23 @@
       background: linear-gradient(135deg, #1d3557 0%, #0d1b2a 100%);
       color: white;
       text-align: center;
-      padding: 26px 20px 20px;
+      padding: 24px 20px 20px;
       border-radius: 0 0 28px 28px;
       box-shadow: 0 4px 20px rgba(0,0,0,0.15);
     }
 
-    .header-logo {
-      width: 92px;
-      height: auto;
+    /* Logo Vector */
+    .logo-wrapper {
+      width: 95px;
+      height: 105px;
+      margin: 0 auto 8px;
       display: block;
-      margin: 0 auto 10px;
       filter: drop-shadow(0 6px 14px rgba(0,0,0,0.4));
       transition: transform 0.3s ease;
     }
 
-    .header-logo:hover {
-      transform: scale(1.05);
+    .logo-wrapper:hover {
+      transform: scale(1.06);
     }
 
     .badge-top {
@@ -69,7 +70,7 @@
       border-radius: 50px;
       font-size: 0.82rem;
       font-weight: 700;
-      margin-bottom: 10px;
+      margin-bottom: 8px;
     }
 
     header h1 {
@@ -83,7 +84,7 @@
       color: #e0e1dd;
       font-size: 0.92rem;
       font-weight: 600;
-      margin-bottom: 15px;
+      margin-bottom: 14px;
     }
 
     /* Currency Switcher */
@@ -117,7 +118,7 @@
       box-shadow: 0 2px 8px rgba(0,0,0,0.2);
     }
 
-    /* Category Navigation */
+    /* Navigation */
     .nav-container {
       position: sticky;
       top: 0;
@@ -519,10 +520,38 @@
 </head>
 <body>
 
-  <!-- Header with Logo and Currency Switcher -->
+  <!-- Header with Inlined Vector Logo -->
   <header>
-    <!-- شعار مطعم حنين برغر المفرغ -->
-    <img src="logo.png" alt="شعار مطعم حنين برغر" class="header-logo" onerror="this.src='https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=160&q=80';">
+    <div class="logo-wrapper">
+      <svg viewBox="0 0 200 220" width="100%" height="100%">
+        <!-- Outer Yellow Ring -->
+        <circle cx="100" cy="95" r="88" fill="#e63946" stroke="#f7a600" stroke-width="7" />
+        <!-- Inner White Ring -->
+        <circle cx="100" cy="95" r="82" fill="none" stroke="#ffffff" stroke-width="3.5" />
+        
+        <!-- Smiling Bun (Top) -->
+        <path d="M 52 64 A 48 44 0 0 1 148 64 Z" fill="#e63946" stroke="#f7a600" stroke-width="4.5" />
+        <!-- Eyes -->
+        <path d="M 77 48 Q 83 42 89 48" fill="none" stroke="#f7a600" stroke-width="3.5" stroke-linecap="round" />
+        <path d="M 111 48 Q 117 42 123 48" fill="none" stroke="#f7a600" stroke-width="3.5" stroke-linecap="round" />
+        <!-- Smile -->
+        <path d="M 94 56 Q 100 62 106 56" fill="none" stroke="#f7a600" stroke-width="3.5" stroke-linecap="round" />
+
+        <!-- Haneen Typography -->
+        <text x="100" y="112" text-anchor="middle" font-family="'Cairo', sans-serif" font-weight="900" font-size="46" fill="#ffffff">حنين</text>
+
+        <!-- Patty Wave -->
+        <path d="M 54 125 Q 65 117 76 125 T 98 125 T 120 125 T 144 125" fill="none" stroke="#f7a600" stroke-width="4.5" stroke-linecap="round" />
+        <!-- Bottom Bun Line -->
+        <path d="M 56 137 L 142 137" fill="none" stroke="#f7a600" stroke-width="5" stroke-linecap="round" />
+
+        <!-- Curved BURGER Text -->
+        <path id="curvePath" d="M 40 166 Q 100 206 160 166" fill="none" />
+        <text fill="#f7a600" stroke="#ffffff" stroke-width="1.5" font-size="25" font-family="'Cairo', sans-serif" font-weight="900" letter-spacing="3" text-anchor="middle">
+          <textPath href="#curvePath" startOffset="50%">BURGER</textPath>
+        </text>
+      </svg>
+    </div>
 
     <div class="badge-top">جودة ونكهة مميزة ⭐</div>
     <h1>مطعم حنين برغر</h1>
@@ -626,7 +655,8 @@
       { id: "s1", category: "sandwiches", name: "سندويشة كريسبي", desc: "كريسبي دجاج مقرمش مع المايونيز والخس الطازج", priceSYP: 33000, priceTL: 110, img: "https://images.unsplash.com/photo-1528735602780-2552fd46c7af?w=400&q=80" },
       { id: "s2", category: "sandwiches", name: "سندويشة سبايسي", desc: "دجاج مقرمش متبل بخلطة حارة مع الصوص والمخلل", priceSYP: 33000, priceTL: 110, img: "https://images.unsplash.com/photo-1509722747041-616f39b57569?w=400&q=80" },
       { id: "s3", category: "sandwiches", name: "سندويشة فاهيتا", desc: "فاهيتا دجاج متبلة مع الفلفل الرومي والجبنة", priceSYP: 36000, priceTL: 120, img: "https://images.unsplash.com/photo-1621800043295-a73fe2f76e2c?w=400&q=80" },
-      { id: "s4", category: "sandwiches", name: "سندويشة غواصة", desc: "قطع الدجاج اللذيذة مع الجبن السائح بخبز الصمون الطري", priceSYP: 39000, priceTL: 130, img: "https://images.unsplash.com/photo-1619096252214-efc6714e384e?w=400&q=80" },
+      // تم تحديث صورة سندويشة غواصة
+      { id: "s4", category: "sandwiches", name: "سندويشة غواصة", desc: "قطع الدجاج اللذيذة مع الجبن السائح بخبز الصمون الطري", priceSYP: 39000, priceTL: 130, img: "https://images.unsplash.com/photo-1553909489-cd47e0907980?w=400&q=80" },
       { id: "s5", category: "sandwiches", name: "سندويشة بطاطا", desc: "بطاطا مقلية مقرمشة مع المخلل والمايونيز والكاتشب", priceSYP: 18000, priceTL: 60, img: "https://images.unsplash.com/photo-1585238342024-78d387f4a707?w=400&q=80" },
 
       // قسم المشروبات
@@ -634,7 +664,8 @@
       { id: "d2", category: "drinks", name: "ميرندا تنك", desc: "مشروب برتقال ميرندا مثلج 330 مل", priceSYP: 6000, priceTL: 20, img: "https://images.unsplash.com/photo-1622483767028-3f66f32aef97?w=400&q=80" },
       { id: "d3", category: "drinks", name: "سفن اب", desc: "مشروب ليمون سفن اب غازي منعش 330 مل", priceSYP: 6000, priceTL: 20, img: "https://images.unsplash.com/photo-1625772299848-391b6a87d7b3?w=400&q=80" },
       { id: "d4", category: "drinks", name: "لفت اب", desc: "مشروب طاقة لفت اب منعش", priceSYP: 6000, priceTL: 20, img: "https://images.unsplash.com/photo-1551024709-8f23befc6f87?w=400&q=80" },
-      { id: "d5", category: "drinks", name: "ماء صغير", desc: "عبوة مياه معدنية طبيعية نقية", priceSYP: 6000, priceTL: 20, img: "https://images.unsplash.com/photo-1548839140-29a749e1bc4e?w=400&q=80" },
+      // تم تحديث صورة ماء صغير
+      { id: "d5", category: "drinks", name: "ماء صغير", desc: "عبوة مياه معدنية طبيعية نقية", priceSYP: 6000, priceTL: 20, img: "https://images.unsplash.com/photo-1523362628745-0c100150b504?w=400&q=80" },
       { id: "d6", category: "drinks", name: "عيران", desc: "كوب لبن عيران طازج وبارد", priceSYP: 6000, priceTL: 20, img: "https://images.unsplash.com/photo-1570696516188-ade861b84a49?w=400&q=80" }
     ];
 
@@ -685,7 +716,7 @@
 
               return `
                 <div class="item-card" data-id="${item.id}">
-                  <img src="${item.img}" alt="${item.name}" class="item-img" loading="lazy">
+                  <img src="${item.img}" alt="${item.name}" class="item-img" loading="lazy" onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=400&q=80';">
                   <div class="item-details">
                     <div class="item-name">${item.name}</div>
                     <div class="item-desc">${item.desc}</div>
