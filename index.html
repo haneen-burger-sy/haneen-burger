@@ -175,7 +175,6 @@
       flex-direction: column;
       justify-content: space-between;
       box-shadow: var(--shadow);
-      position: relative;
     }
 
     .card-top {
@@ -261,13 +260,13 @@
       background: #1d3557;
       color: #ffffff;
       border-radius: 16px;
-      padding: 12px 18px;
+      padding: 10px 16px;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+      box-shadow: 0 10px 25px rgba(0,0,0,0.35);
       z-index: 1000;
-      transition: transform 0.3s ease;
+      cursor: pointer;
     }
 
     .cart-summary {
@@ -286,18 +285,205 @@
       font-weight: 900;
     }
 
-    .order-btn {
+    .open-cart-btn {
+      background: #e63946;
+      color: #ffffff;
+      border: none;
+      padding: 8px 14px;
+      border-radius: 12px;
+      font-size: 0.88rem;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    /* Modal Styles */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.65);
+      z-index: 2000;
+      display: none;
+      align-items: flex-end;
+      justify-content: center;
+    }
+
+    .modal-overlay.active {
+      display: flex;
+    }
+
+    .modal-box {
+      background: #ffffff;
+      width: 100%;
+      max-width: 520px;
+      max-height: 90vh;
+      border-radius: 22px 22px 0 0;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      animation: slideUp 0.25s ease-out;
+    }
+
+    @keyframes slideUp {
+      from { transform: translateY(100%); }
+      to { transform: translateY(0); }
+    }
+
+    .modal-header {
+      padding: 16px 20px;
+      background: #f8f9fa;
+      border-bottom: 1px solid var(--border-color);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .modal-title {
+      font-size: 1.1rem;
+      font-weight: 800;
+      color: var(--dark);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .modal-close {
+      background: none;
+      border: none;
+      font-size: 1.6rem;
+      line-height: 1;
+      color: #999;
+      cursor: pointer;
+    }
+
+    .modal-body {
+      padding: 16px 20px;
+      overflow-y: auto;
+    }
+
+    /* Cart Items in Modal */
+    .cart-items-list {
+      margin-bottom: 16px;
+    }
+
+    .cart-item-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 0;
+      border-bottom: 1px solid #f1f3f5;
+    }
+
+    .item-title-col {
+      flex: 1;
+    }
+
+    .item-name {
+      font-size: 0.9rem;
+      font-weight: 800;
+      color: #111;
+    }
+
+    .item-single-price {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+    }
+
+    .qty-controls {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .qty-btn {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      border: 1px solid var(--border-color);
+      background: #f8f9fa;
+      color: var(--dark);
+      font-size: 1rem;
+      font-weight: 900;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+    }
+
+    .qty-btn.plus {
+      background: var(--primary);
+      color: #ffffff;
+      border-color: var(--primary);
+    }
+
+    .qty-number {
+      font-weight: 800;
+      font-size: 0.95rem;
+      min-width: 18px;
+      text-align: center;
+    }
+
+    /* Customer Form */
+    .form-group {
+      margin-bottom: 12px;
+    }
+
+    .form-group label {
+      display: block;
+      font-size: 0.82rem;
+      font-weight: 700;
+      margin-bottom: 5px;
+      color: var(--dark);
+    }
+
+    .form-group input, 
+    .form-group textarea {
+      width: 100%;
+      padding: 10px 14px;
+      border: 1.5px solid var(--border-color);
+      border-radius: 10px;
+      font-size: 0.88rem;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    .form-group input:focus, 
+    .form-group textarea:focus {
+      border-color: var(--primary);
+    }
+
+    .modal-footer {
+      padding: 14px 20px;
+      background: #ffffff;
+      border-top: 1px solid var(--border-color);
+    }
+
+    .modal-total-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 10px;
+      font-size: 1.05rem;
+      font-weight: 900;
+      color: var(--dark);
+    }
+
+    .submit-order-btn {
+      width: 100%;
       background: #25d366;
       color: #ffffff;
       border: none;
-      padding: 8px 16px;
+      padding: 12px;
       border-radius: 12px;
-      font-size: 0.9rem;
+      font-size: 1rem;
       font-weight: 800;
       cursor: pointer;
       display: flex;
       align-items: center;
-      gap: 6px;
+      justify-content: center;
+      gap: 8px;
+      box-shadow: 0 4px 12px rgba(37, 211, 102, 0.35);
     }
   </style>
 </head>
@@ -333,20 +519,65 @@
   <main id="menu-container"></main>
 
   <!-- Floating Cart Bar -->
-  <div class="cart-bar" id="cartBar" style="display: none;">
+  <div class="cart-bar" id="cartBar" style="display: none;" onclick="openCartModal()">
     <div class="cart-summary">
       <span class="cart-count" id="cartCount">0 وجبات محددة</span>
       <span class="cart-total" id="cartTotal">0 ل.س</span>
     </div>
-    <button class="order-btn" onclick="sendOrderWhatsApp()">
-      <span>اطلب عبر واتساب</span>
-      💬
+    <button class="open-cart-btn">
+      <span>عرض السلة وتثبيت الطلب</span>
+      🛒
     </button>
+  </div>
+
+  <!-- Cart & Checkout Modal -->
+  <div class="modal-overlay" id="cartModal" onclick="closeCartModal(event)">
+    <div class="modal-box" onclick="event.stopPropagation()">
+      <div class="modal-header">
+        <div class="modal-title">🛒 سلة المشتريات وتفاصيل الطلب</div>
+        <button class="modal-close" onclick="closeCartModal()">&times;</button>
+      </div>
+      
+      <div class="modal-body">
+        <!-- وجبات السلة مع زري الزيادة والنقصان -->
+        <div class="cart-items-list" id="modalCartItems"></div>
+
+        <hr style="border: none; border-top: 1px dashed var(--border-color); margin: 16px 0;">
+
+        <!-- بيانات الزبون -->
+        <div class="form-group">
+          <label>👤 الاسم الكريم:</label>
+          <input type="text" id="custName" placeholder="مثال: محمود" required>
+        </div>
+        
+        <div class="form-group">
+          <label>📍 العنوان أو المنطقة:</label>
+          <input type="text" id="custAddress" placeholder="مثال: الدانا - جانب الجامع الكبير" required>
+        </div>
+
+        <div class="form-group">
+          <label>📝 ملاحظات إضافية على الطلب:</label>
+          <textarea id="custNotes" rows="2" placeholder="مثال: بلا توم، شطة زيادة، بدون مخلل..."></textarea>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <div class="modal-total-row">
+          <span>المجموع الكلي:</span>
+          <span id="modalTotal" style="color: var(--primary);">0 ل.س</span>
+        </div>
+        <button class="submit-order-btn" onclick="sendOrderWhatsApp()">
+          <span>تثبيت وإرسال الطلب عبر واتساب</span>
+          💬
+        </button>
+      </div>
+    </div>
   </div>
 
   <script>
     let currentCurrency = 'SYP';
-    let cart = [];
+    // السلة تخزن المعرف والكمية: { 1: 2, 3: 1 }
+    let cart = {};
 
     const products = [
       // برغر
@@ -402,91 +633,4 @@
         titleDiv.textContent = categoryNames[cat];
         container.appendChild(titleDiv);
 
-        const grid = document.createElement('div');
-        grid.className = 'products-grid';
-
-        items.forEach(item => {
-          const price = currentCurrency === 'SYP' ? `${item.syp} ل.س` : `${item.tl} TL`;
-          const card = document.createElement('div');
-          card.className = 'card';
-          card.innerHTML = `
-            <div class="card-top">
-              <img src="${item.img}" class="card-img" alt="${item.name}" loading="lazy">
-              <div class="card-info">
-                <div class="card-title">${item.name}</div>
-                <div class="card-desc">${item.desc}</div>
-              </div>
-            </div>
-            <div class="card-bottom">
-              <div class="card-price">${price}</div>
-              <button class="add-btn" onclick="addToCart(${item.id})">+ إضافة</button>
-            </div>
-          `;
-          grid.appendChild(card);
-        });
-
-        container.appendChild(grid);
-      });
-    }
-
-    function changeCurrency(curr) {
-      currentCurrency = curr;
-      document.getElementById('btn-syp').classList.toggle('active', curr === 'SYP');
-      document.getElementById('btn-tl').classList.toggle('active', curr === 'TL');
-      renderMenu(window.currentFilter || 'all');
-      updateCartUI();
-    }
-
-    function filterCategory(cat, btn) {
-      window.currentFilter = cat;
-      document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-      renderMenu(cat);
-    }
-
-    function addToCart(id) {
-      const product = products.find(p => p.id === id);
-      cart.push(product);
-      updateCartUI();
-    }
-
-    function updateCartUI() {
-      const bar = document.getElementById('cartBar');
-      if (cart.length === 0) {
-        bar.style.display = 'none';
-        return;
-      }
-      bar.style.display = 'flex';
-      document.getElementById('cartCount').textContent = `${cart.length} وجبة في السلة`;
-
-      const total = cart.reduce((sum, item) => sum + (currentCurrency === 'SYP' ? item.syp : item.tl), 0);
-      document.getElementById('cartTotal').textContent = currentCurrency === 'SYP' ? `${total} ل.س` : `${total} TL`;
-    }
-
-    function sendOrderWhatsApp() {
-      if (cart.length === 0) return;
-      let text = `*طلب جديد من مطعم حنين برغر:*%0A----------------------%0A`;
-      
-      const counts = {};
-      cart.forEach(item => {
-        counts[item.name] = (counts[item.name] || 0) + 1;
-      });
-
-      for (const [name, qty] of Object.entries(counts)) {
-        text += `• ${name} (عدد ${qty})%0A`;
-      }
-
-      const total = cart.reduce((sum, item) => sum + (currentCurrency === 'SYP' ? item.syp : item.tl), 0);
-      const currText = currentCurrency === 'SYP' ? 'ل.س' : 'TL';
-      text += `----------------------%0A*الإجمالي:* ${total} ${currText}`;
-
-      window.open(`https://wa.me/963938671515?text=${text}`, '_blank');
-    }
-
-    // تشغيل القائمة تلقائياً
-    window.addEventListener('DOMContentLoaded', () => {
-      renderMenu();
-    });
-  </script>
-</body>
-</html>
+        const grid = document.create
