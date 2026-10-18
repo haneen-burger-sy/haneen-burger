@@ -42,9 +42,22 @@
       background: linear-gradient(135deg, #1d3557 0%, #0d1b2a 100%);
       color: white;
       text-align: center;
-      padding: 30px 20px 20px;
+      padding: 26px 20px 20px;
       border-radius: 0 0 28px 28px;
       box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+    }
+
+    .header-logo {
+      width: 92px;
+      height: auto;
+      display: block;
+      margin: 0 auto 10px;
+      filter: drop-shadow(0 6px 14px rgba(0,0,0,0.4));
+      transition: transform 0.3s ease;
+    }
+
+    .header-logo:hover {
+      transform: scale(1.05);
     }
 
     .badge-top {
@@ -52,15 +65,15 @@
       background: rgba(230, 57, 70, 0.2);
       color: #ffb703;
       border: 1px solid rgba(255, 183, 3, 0.4);
-      padding: 4px 16px;
+      padding: 3px 14px;
       border-radius: 50px;
-      font-size: 0.85rem;
+      font-size: 0.82rem;
       font-weight: 700;
       margin-bottom: 10px;
     }
 
     header h1 {
-      font-size: 2rem;
+      font-size: 1.95rem;
       font-weight: 900;
       margin-bottom: 4px;
       color: #ffffff;
@@ -68,9 +81,9 @@
 
     header p {
       color: #e0e1dd;
-      font-size: 0.95rem;
+      font-size: 0.92rem;
       font-weight: 600;
-      margin-bottom: 16px;
+      margin-bottom: 15px;
     }
 
     /* Currency Switcher */
@@ -506,8 +519,11 @@
 </head>
 <body>
 
-  <!-- Header with Currency Switcher -->
+  <!-- Header with Logo and Currency Switcher -->
   <header>
+    <!-- شعار مطعم حنين برغر المفرغ -->
+    <img src="logo.png" alt="شعار مطعم حنين برغر" class="header-logo" onerror="this.src='https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=160&q=80';">
+
     <div class="badge-top">جودة ونكهة مميزة ⭐</div>
     <h1>مطعم حنين برغر</h1>
     <p>الطعم اللي يرضيك • أهلاً وسهلاً بكم</p>
@@ -588,7 +604,6 @@
   </div>
 
   <script>
-    // قائمة أصناف المطعم والأسعار المحدثة
     const menuData = [
       // قسم البرغر
       { id: "b1", category: "burger", name: "برغر لحم", desc: "لحم عجل طازج متبل مع الصوص والجبن الخالص", priceSYP: 69000, priceTL: 230, img: "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=400&q=80" },
@@ -800,7 +815,6 @@
       if (e.target === modal) modal.classList.remove("active");
     });
 
-    // إرسال الطلب عبر الواتساب مباشرة لرقم المطعم
     document.getElementById("orderForm").addEventListener("submit", (e) => {
       e.preventDefault();
 
@@ -833,7 +847,6 @@
         orderText += `*ملاحظات:* ${notes}%0A`;
       }
 
-      // رقم واتساب المطعم المباشر
       const restaurantNumber = "963938671515"; 
       const whatsappUrl = `https://wa.me/${restaurantNumber}?text=${orderText}`;
 
