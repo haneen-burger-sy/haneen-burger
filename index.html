@@ -633,4 +633,190 @@
         titleDiv.textContent = categoryNames[cat];
         container.appendChild(titleDiv);
 
-        const grid = document.create
+        const grid = document.createElement('div');
+        grid.className = 'products-grid';
+
+        items.forEach(item => {
+          const price = currentCurrency === 'SYP' ? `${item.syp} ل.س` : `${item.tl} TL`;
+          const card = document.createElement('div');
+          card.className = 'card';
+          card.innerHTML = `
+            <div class="card-top">
+              <img src="${item.img}" class="card-img" alt="${item.name}" loading="lazy">
+              <div class="card-info">
+                <div class="card-title">${item.name}</div>
+                <div class="card-desc">${item.desc}</div>
+              </div>
+            </div>
+            <div class="card-bottom">
+              <div class="card-price">${price}</div>
+              <button class="add-btn" onclick="addToCart(${item.id})">+ إضافة</button>
+            </div>
+          `;
+          grid.appendChild(card);
+        });
+
+        container.appendChild(grid);
+      });
+    }
+
+    function changeCurrency(curr) {
+      currentCurrency = curr;
+      document.getElementById('btn-syp').classList.toggle('active', curr === 'SYP');
+      document.getElementById('btn-tl').classList.toggle('active', curr === 'TL');
+      renderMenu(window.currentFilter || 'all');
+      updateCartUI();
+    }
+
+    function filterCategory(cat, btn) {
+      window.currentFilter = cat;
+      document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      renderMenu(cat);
+    }
+
+    // إدارة السلة
+    function addToCart(id) {
+      cart[id] = (cart[id] || 0) + 1;
+      updateCartUI();
+    }
+
+    function changeQty(id, delta) {
+      if (!cart[id]) return;
+      cart[id] += delta;
+      if (cart[id] <= 0) {
+        delete cart[id];
+      }
+      updateCartUI();
+      if (Object.keys(cart).length === 0) {
+        closeCartModal();
+      }
+    }
+
+    function updateCartUI() {
+      const bar = document.getElementById('cartBar');
+      let totalCount = 0;
+      let totalPrice = 0;
+
+      for (const [id, qty] of Object.entries(cart)) {
+        const item = products.find(p => p.id == id);
+        if (item) {
+          totalCount += qty;
+          totalPrice += (currentCurrency === 'SYP' ? item.syp : item.tl) * qty;
+        }
+      }
+
+      if (totalCount === 0) {
+        bar.style.display = 'none';
+        return;
+      }
+
+      bar.style.display = 'flex';
+      const currText = currentCurrency === 'SYP' ? 'ل.س' : 'TL';
+      document.getElementById('cartCount').textContent = `${totalCount} وجبات في السلة`;
+      document.getElementById('cartTotal').textContent = `${totalPrice} ${currText}`;
+
+      // تحديث النافذة المنبثقة
+      renderModalCart(totalPrice, currText);
+    }
+
+    function openCartModal() {
+      const modal = document.getElementById('cartModal');
+      modal.classList.add('active');
+      updateCartUI();
+    }
+
+    function closeCartModal(e) {
+      if (!e || e.target.id === 'cartModal' || e.target.classList.contains('modal-close')) {
+        document.getElementById('cartModal').classList.remove('active');
+      }
+    }
+
+    function renderModalCart(totalPrice, currText) {
+      const listContainer = document.getElementById('modalCartItems');
+      listContainer.innerHTML = '';
+
+      for (const [id, qty] of Object.entries(cart)) {
+        const item = products.find(p => p.id == id);
+        if (!item) continue;
+
+        const itemPrice = currentCurrency === 'SYP' ? item.syp : item.tl;
+        const row = document.createElement('div');
+        row.className = 'cart-item-row';
+        row.innerHTML = `
+          <div class="item-title-col">
+            <div class="item-name">${item.name}</div>
+            <div class="item-single-price">${itemPrice} ${currText} للقطعة</div>
+          </div>
+          <div class="qty-controls">
+            <button class="qty-btn" onclick="changeQty(${item.id}, -1)">-</button>
+            <span class="qty-number">${qty}</span>
+            <button class="qty-btn plus" onclick="changeQty(${item.id}, 1)">+</button>
+          </div>
+        `;
+        listContainer.appendChild(row);
+      }
+
+      document.getElementById('modalTotal').textContent = `${totalPrice} ${currText}`;
+    }
+
+    // إرسال الطلب عبر واتساب بالقالب المعتمد
+    function sendOrderWhatsApp() {
+      if (Object.keys(cart).length === 0) {
+        alert('يرجى اختيار وجبة واحدة على الأقل قبل الطلب.');
+        return;
+      }
+
+      const name = document.getElementById('custName').value.trim();
+      const address = document.getElementById('custAddress').value.trim();
+      const notes = document.getElementById('custNotes').value.trim() || 'لا يوجد';
+
+      if (!name) {
+        alert('يرجى كتابة اسمك الكريم لتأكيد الطلب.');
+        document.getElementById('custName').focus();
+        return;
+      }
+
+      if (!address) {
+        alert('يرجى كتابة العنوان أو مكان التوصيل.');
+        document.getElementById('custAddress').focus();
+        return;
+      }
+
+      const currText = currentCurrency === 'SYP' ? 'ليرة سورية' : 'TL';
+      const currSymbol = currentCurrency === 'SYP' ? 'ل.س' : 'TL';
+      let total = 0;
+      let itemsText = '';
+
+      for (const [id, qty] of Object.entries(cart)) {
+        const item = products.find(p => p.id == id);
+        if (item) {
+          const itemPrice = currentCurrency === 'SYP' ? item.syp : item.tl;
+          const subtotal = itemPrice * qty;
+          total += subtotal;
+          itemsText += `▫️ ${qty} × ${item.name} (${subtotal} ${currSymbol})%0A`;
+        }
+      }
+
+      // القالب المخصص
+      let msg = `🍔 *طلب جديد من مطعم حنين برغر* 🍔%0A`;
+      msg += `━━━━━━━━━━━━━━━%0A`;
+      msg += `👤 *الزبون:* ${name}%0A`;
+      msg += `📍 *العنوان:* ${address}%0A`;
+      msg += `📝 *ملاحظات:* ${notes}%0A`;
+      msg += `━━━━━━━━━━━━━━━%0A`;
+      msg += `🛒 *تفاصيل الوجبات:*%0A`;
+      msg += itemsText;
+      msg += `━━━━━━━━━━━━━━━%0A`;
+      msg += `💰 *المجموع:* ${total} ${currText}%0A`;
+      msg += `━━━━━━━━━━━━━━━`;
+
+      window.open(`https://wa.me/963938671515?text=${msg}`, '_blank');
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+      renderMenu();
+    });
+  </script>
+</body>
+</html>
