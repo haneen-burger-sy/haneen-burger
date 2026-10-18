@@ -41,28 +41,19 @@
       background: linear-gradient(135deg, #1d3557 0%, #0d1b2a 100%);
       color: white;
       text-align: center;
-      padding: 24px 16px 20px;
+      padding: 22px 16px 18px;
       border-radius: 0 0 26px 26px;
       box-shadow: 0 4px 20px rgba(0,0,0,0.15);
     }
 
-    .header-logo {
-      width: 86px;
-      height: 86px;
-      margin: 0 auto 10px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: #e63946;
-      border: 3px solid #ffb703;
-      border-radius: 50%;
-      box-shadow: 0 6px 16px rgba(0,0,0,0.3);
-    }
-
-    .header-logo svg {
-      width: 52px;
-      height: 52px;
-      fill: #ffffff;
+    /* الشعار المخصص المفرغ */
+    .logo-wrapper {
+      width: 95px;
+      height: 105px;
+      margin: 0 auto 8px;
+      display: block;
+      filter: drop-shadow(0 6px 14px rgba(0,0,0,0.4));
+      transition: transform 0.3s ease;
     }
 
     .badge-top {
@@ -74,7 +65,7 @@
       border-radius: 50px;
       font-size: 0.8rem;
       font-weight: 700;
-      margin-bottom: 8px;
+      margin-bottom: 6px;
     }
 
     header h1 {
@@ -87,10 +78,10 @@
       color: #e0e1dd;
       font-size: 0.88rem;
       font-weight: 600;
-      margin-bottom: 14px;
+      margin-bottom: 12px;
     }
 
-    /* Currency Switcher */
+    /* أزرار العملة */
     .currency-switch {
       display: inline-flex;
       background: rgba(255, 255, 255, 0.12);
@@ -117,7 +108,7 @@
       box-shadow: 0 2px 8px rgba(0,0,0,0.2);
     }
 
-    /* Category Filter */
+    /* شريط الأقسام */
     .categories-bar {
       display: flex;
       gap: 8px;
@@ -147,7 +138,7 @@
       border-color: var(--primary);
     }
 
-    /* Products Grid */
+    /* شبكة الوجبات */
     .section-title {
       font-size: 1.05rem;
       font-weight: 800;
@@ -251,7 +242,7 @@
       transform: scale(0.95);
     }
 
-    /* Floating Cart Bar */
+    /* شريط السلة العائم */
     .cart-bar {
       position: fixed;
       bottom: 12px;
@@ -298,7 +289,7 @@
       gap: 6px;
     }
 
-    /* Modal Styles */
+    /* نافذة مراجعة السلة والطلب */
     .modal-overlay {
       position: fixed;
       inset: 0;
@@ -340,12 +331,9 @@
     }
 
     .modal-title {
-      font-size: 1.1rem;
+      font-size: 1.05rem;
       font-weight: 800;
       color: var(--dark);
-      display: flex;
-      align-items: center;
-      gap: 6px;
     }
 
     .modal-close {
@@ -353,18 +341,13 @@
       border: none;
       font-size: 1.6rem;
       line-height: 1;
-      color: #999;
+      color: #888;
       cursor: pointer;
     }
 
     .modal-body {
       padding: 16px 20px;
       overflow-y: auto;
-    }
-
-    /* Cart Items in Modal */
-    .cart-items-list {
-      margin-bottom: 16px;
     }
 
     .cart-item-row {
@@ -424,7 +407,6 @@
       text-align: center;
     }
 
-    /* Customer Form */
     .form-group {
       margin-bottom: 12px;
     }
@@ -445,7 +427,6 @@
       border-radius: 10px;
       font-size: 0.88rem;
       outline: none;
-      transition: border-color 0.2s;
     }
 
     .form-group input:focus, 
@@ -491,11 +472,40 @@
 
   <!-- Header -->
   <header>
-    <div class="header-logo">
-      <svg viewBox="0 0 24 24">
-        <path d="M12 2C7.58 2 4 4.79 4 8c0 .28.03.55.08.82C2.84 9.4 2 10.6 2 12c0 1.66 1.34 3 3 3h14c1.66 0 3-1.34 3-3 0-1.4-.84-2.6-2.08-3.18.05-.27.08-.54.08-.82 0-3.21-3.58-6-8-6zm0 2c3.42 0 6.18 2.06 6.84 4.78-.28.08-.55.18-.81.3-1.46-.68-3.66-1.08-6.03-1.08s-4.57.4-6.03 1.08c-.26-.12-.53-.22-.81-.3C5.82 6.06 8.58 4 12 4zm-7 8c-.55 0-1-.45-1-1s.45-1 1-1h14c.55 0 1 .45 1 1s-.45 1-1 1H5zm14 5c-.7 0-1.37.2-1.95.55-.58-.35-1.25-.55-1.95-.55s-1.37.2-1.95.55C13.57 17.2 12.9 17 12 17s-1.57.2-2.15.55C9.27 17.2 8.6 17 7.9 17s-1.37.2-1.95.55C5.37 17.2 4.7 17 4 17c-1.1 0-2 .9-2 2v1h20v-1c0-1.1-.9-2-2-2z"/>
+    <!-- اللوغو الأصلي المطابق تماماً لصورتك -->
+    <div class="logo-wrapper">
+      <svg viewBox="0 0 200 220" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <path id="burgerCurve" d="M 44,158 A 82,82 0 0,0 156,158" fill="none" />
+        </defs>
+
+        <!-- الإطار الدائري الذهبي مع الفتحة السفلية -->
+        <path d="M 154,152 A 80,80 0 1,0 46,152" fill="none" stroke="#f5a623" stroke-width="7" stroke-linecap="round" />
+
+        <!-- الدائرة الحمراء الداخلية -->
+        <circle cx="100" cy="94" r="66" fill="#9e1a24" />
+
+        <!-- خبزة البرغر العلوية المبتسمة -->
+        <path d="M 68,68 C 68,44 132,44 132,68 Z" fill="none" stroke="#f5a623" stroke-width="4.5" stroke-linejoin="round" stroke-linecap="round" />
+        <path d="M 80,57 C 82,53 88,53 90,57" fill="none" stroke="#f5a623" stroke-width="3.5" stroke-linecap="round" />
+        <path d="M 110,57 C 112,53 118,53 120,57" fill="none" stroke="#f5a623" stroke-width="3.5" stroke-linecap="round" />
+        <path d="M 94,62 C 96,67 104,67 106,62" fill="none" stroke="#f5a623" stroke-width="3.5" stroke-linecap="round" />
+
+        <!-- كلمة حنين بالخط الأبيض الأصلي -->
+        <text x="100" y="112" text-anchor="middle" fill="#ffffff" font-family="'Cairo', sans-serif" font-weight="900" font-size="36">حنين</text>
+
+        <!-- تفاصيل البرغر السفلية -->
+        <path d="M 108,121 Q 114,116 120,121 Q 126,126 132,121" fill="none" stroke="#f5a623" stroke-width="4" stroke-linecap="round" />
+        <line x1="82" y1="126" x2="132" y2="126" stroke="#f5a623" stroke-width="4" stroke-linecap="round" />
+        <path d="M 70,129 H 130 C 130,140 122,143 100,143 C 78,143 70,140 70,129 Z" fill="none" stroke="#f5a623" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" />
+
+        <!-- كلمة BURGER المقوسة في الأسفل -->
+        <text fill="#f5a623" font-family="'Cairo', sans-serif" font-weight="900" font-size="20" letter-spacing="3.5">
+          <textPath href="#burgerCurve" startOffset="50%" text-anchor="middle">BURGER</textPath>
+        </text>
       </svg>
     </div>
+
     <div class="badge-top">⭐ جودة ونكهة مميزة</div>
     <h1>مطعم حنين برغر</h1>
     <p>الطعم اللي يرضيك • أهلاً وسهلاً بكم</p>
@@ -506,7 +516,7 @@
     </div>
   </header>
 
-  <!-- Categories Filter -->
+  <!-- أزرار الأقسام -->
   <div class="categories-bar">
     <button class="cat-btn active" onclick="filterCategory('all', this)">الكل</button>
     <button class="cat-btn" onclick="filterCategory('burger', this)">🍔 قسم البرغر</button>
@@ -515,31 +525,31 @@
     <button class="cat-btn" onclick="filterCategory('drinks', this)">🥤 المشروبات</button>
   </div>
 
-  <!-- Menu Container -->
+  <!-- حاوية القائمة -->
   <main id="menu-container"></main>
 
-  <!-- Floating Cart Bar -->
+  <!-- شريط السلة العائم -->
   <div class="cart-bar" id="cartBar" style="display: none;" onclick="openCartModal()">
     <div class="cart-summary">
       <span class="cart-count" id="cartCount">0 وجبات محددة</span>
       <span class="cart-total" id="cartTotal">0 ل.س</span>
     </div>
     <button class="open-cart-btn">
-      <span>عرض السلة وتثبيت الطلب</span>
+      <span>عرض وتعديل السلة</span>
       🛒
     </button>
   </div>
 
-  <!-- Cart & Checkout Modal -->
+  <!-- نافذة مراجعة السلة والبيانات -->
   <div class="modal-overlay" id="cartModal" onclick="closeCartModal(event)">
     <div class="modal-box" onclick="event.stopPropagation()">
       <div class="modal-header">
-        <div class="modal-title">🛒 سلة المشتريات وتفاصيل الطلب</div>
+        <div class="modal-title">🛒 سلة المشتريات ومراجعة الطلب</div>
         <button class="modal-close" onclick="closeCartModal()">&times;</button>
       </div>
       
       <div class="modal-body">
-        <!-- وجبات السلة مع زري الزيادة والنقصان -->
+        <!-- قائمة الوجبات مع أزرار الزيادة والنقصان -->
         <div class="cart-items-list" id="modalCartItems"></div>
 
         <hr style="border: none; border-top: 1px dashed var(--border-color); margin: 16px 0;">
@@ -551,7 +561,7 @@
         </div>
         
         <div class="form-group">
-          <label>📍 العنوان أو المنطقة:</label>
+          <label>📍 العنوان أو مكان التوصيل:</label>
           <input type="text" id="custAddress" placeholder="مثال: الدانا - جانب الجامع الكبير" required>
         </div>
 
@@ -576,7 +586,7 @@
 
   <script>
     let currentCurrency = 'SYP';
-    // السلة تخزن المعرف والكمية: { 1: 2, 3: 1 }
+    let currentFilter = 'all';
     let cart = {};
 
     const products = [
@@ -618,11 +628,12 @@
       drinks: '🥤 المشروبات'
     };
 
-    function renderMenu(filter = 'all') {
+    function renderMenu() {
       const container = document.getElementById('menu-container');
+      if (!container) return;
       container.innerHTML = '';
 
-      const catsToRender = filter === 'all' ? ['burger', 'meals', 'sandwiches', 'drinks'] : [filter];
+      const catsToRender = currentFilter === 'all' ? ['burger', 'meals', 'sandwiches', 'drinks'] : [currentFilter];
 
       catsToRender.forEach(cat => {
         const items = products.filter(p => p.cat === cat);
@@ -664,18 +675,17 @@
       currentCurrency = curr;
       document.getElementById('btn-syp').classList.toggle('active', curr === 'SYP');
       document.getElementById('btn-tl').classList.toggle('active', curr === 'TL');
-      renderMenu(window.currentFilter || 'all');
+      renderMenu();
       updateCartUI();
     }
 
     function filterCategory(cat, btn) {
-      window.currentFilter = cat;
+      currentFilter = cat;
       document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
-      renderMenu(cat);
+      renderMenu();
     }
 
-    // إدارة السلة
     function addToCart(id) {
       cart[id] = (cart[id] || 0) + 1;
       updateCartUI();
@@ -716,7 +726,6 @@
       document.getElementById('cartCount').textContent = `${totalCount} وجبات في السلة`;
       document.getElementById('cartTotal').textContent = `${totalPrice} ${currText}`;
 
-      // تحديث النافذة المنبثقة
       renderModalCart(totalPrice, currText);
     }
 
@@ -760,10 +769,9 @@
       document.getElementById('modalTotal').textContent = `${totalPrice} ${currText}`;
     }
 
-    // إرسال الطلب عبر واتساب بالقالب المعتمد
     function sendOrderWhatsApp() {
       if (Object.keys(cart).length === 0) {
-        alert('يرجى اختيار وجبة واحدة على الأقل قبل الطلب.');
+        alert('يرجى اختيار وجبة واحدة على الأقل قبل إرسال الطلب.');
         return;
       }
 
@@ -798,7 +806,6 @@
         }
       }
 
-      // القالب المخصص
       let msg = `🍔 *طلب جديد من مطعم حنين برغر* 🍔%0A`;
       msg += `━━━━━━━━━━━━━━━%0A`;
       msg += `👤 *الزبون:* ${name}%0A`;
@@ -814,9 +821,8 @@
       window.open(`https://wa.me/963938671515?text=${msg}`, '_blank');
     }
 
-    window.addEventListener('DOMContentLoaded', () => {
-      renderMenu();
-    });
+    // تشغيل مباشر فوري بدون أي تأخير أو شاشة بيضاء
+    renderMenu();
   </script>
 </body>
 </html>
