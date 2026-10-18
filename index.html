@@ -46,7 +46,6 @@
       box-shadow: 0 4px 20px rgba(0,0,0,0.15);
     }
 
-    /* الشعار المفرغ الأصلي */
     .logo-wrapper {
       width: 95px;
       height: 105px;
@@ -472,34 +471,27 @@
 
   <!-- Header -->
   <header>
-    <!-- اللوغو الأصلي المفرغ -->
+    <!-- اللوغو الأصلي الدائري المعتمد -->
     <div class="logo-wrapper">
       <svg viewBox="0 0 200 220" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
         <defs>
           <path id="burgerCurve" d="M 44,158 A 82,82 0 0,0 156,158" fill="none" />
         </defs>
 
-        <!-- الإطار الدائري الذهبي مع الفتحة السفلية -->
         <path d="M 154,152 A 80,80 0 1,0 46,152" fill="none" stroke="#f5a623" stroke-width="7" stroke-linecap="round" />
-
-        <!-- الدائرة الحمراء الداخلية -->
         <circle cx="100" cy="94" r="66" fill="#9e1a24" />
 
-        <!-- خبزة البرغر العلوية المبتسمة -->
         <path d="M 68,68 C 68,44 132,44 132,68 Z" fill="none" stroke="#f5a623" stroke-width="4.5" stroke-linejoin="round" stroke-linecap="round" />
         <path d="M 80,57 C 82,53 88,53 90,57" fill="none" stroke="#f5a623" stroke-width="3.5" stroke-linecap="round" />
         <path d="M 110,57 C 112,53 118,53 120,57" fill="none" stroke="#f5a623" stroke-width="3.5" stroke-linecap="round" />
         <path d="M 94,62 C 96,67 104,67 106,62" fill="none" stroke="#f5a623" stroke-width="3.5" stroke-linecap="round" />
 
-        <!-- كلمة حنين الأصلية -->
         <text x="100" y="112" text-anchor="middle" fill="#ffffff" font-family="'Cairo', sans-serif" font-weight="900" font-size="36">حنين</text>
 
-        <!-- تفاصيل البرغر السفلية -->
         <path d="M 108,121 Q 114,116 120,121 Q 126,126 132,121" fill="none" stroke="#f5a623" stroke-width="4" stroke-linecap="round" />
         <line x1="82" y1="126" x2="132" y2="126" stroke="#f5a623" stroke-width="4" stroke-linecap="round" />
         <path d="M 70,129 H 130 C 130,140 122,143 100,143 C 78,143 70,140 70,129 Z" fill="none" stroke="#f5a623" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" />
 
-        <!-- كلمة BURGER المقوسة في الأسفل -->
         <text fill="#f5a623" font-family="'Cairo', sans-serif" font-weight="900" font-size="20" letter-spacing="3.5">
           <textPath href="#burgerCurve" startOffset="50%" text-anchor="middle">BURGER</textPath>
         </text>
@@ -549,30 +541,24 @@
       </div>
       
       <div class="modal-body">
-        <!-- قائمة الوجبات مع أزرار الزيادة والنقصان -->
         <div class="cart-items-list" id="modalCartItems"></div>
-
         <hr style="border: none; border-top: 1px dashed var(--border-color); margin: 16px 0;">
 
-        <!-- 1. الاسم -->
         <div class="form-group">
           <label>👤 الاسم الكريم:</label>
           <input type="text" id="custName" placeholder="مثال: محمود" required>
         </div>
 
-        <!-- 2. الرقم -->
         <div class="form-group">
           <label>📞 رقم الهاتف (للتواصل والتأكيد):</label>
           <input type="tel" id="custPhone" placeholder="مثال: 0938123456" dir="ltr" style="text-align: right;" required>
         </div>
         
-        <!-- 3. العنوان -->
         <div class="form-group">
           <label>📍 العنوان أو مكان التوصيل:</label>
           <input type="text" id="custAddress" placeholder="مثال: الدانا - جانب الجامع الكبير" required>
         </div>
 
-        <!-- 4. الملاحظات -->
         <div class="form-group">
           <label>📝 ملاحظات إضافية على الطلب:</label>
           <textarea id="custNotes" rows="2" placeholder="مثال: بلا توم، شطة زيادة، بدون مخلل..."></textarea>
@@ -593,6 +579,256 @@
   </div>
 
   <script>
-    let currentCurrency = 'SYP';
-    let currentFilter = '
-      
+    var currentCurrency = 'SYP';
+    var currentFilter = 'all';
+    var cart = {};
+
+    var products = [
+      // برغر
+      { id: 1, cat: 'burger', name: 'برغر لحم', desc: 'لحم عجل طازج متبل مع الصوص والجبن السلس', syp: 690, tl: 230, img: 'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=300&auto=format&fit=crop&q=80' },
+      { id: 2, cat: 'burger', name: 'برغر دجاج', desc: 'صدر دجاج مقرمش مع الجبنة والخس الطازج', syp: 540, tl: 180, img: 'https://images.unsplash.com/photo-1625813506062-0aeb1d7a094b?w=300&auto=format&fit=crop&q=80' },
+      { id: 3, cat: 'burger', name: 'برغر أمريكان', desc: 'برغر كلاسيك مميز على الطريقة الأمريكية', syp: 750, tl: 250, img: 'https://images.unsplash.com/photo-1550547660-d9450f859349?w=300&auto=format&fit=crop&q=80' },
+      { id: 4, cat: 'burger', name: 'برغر مكس', desc: 'مزيج اللحم والدجاج مع الخضار والجبن الغني', syp: 825, tl: 275, img: 'https://images.unsplash.com/photo-1572802419224-296b0aeee0d9?w=300&auto=format&fit=crop&q=80' },
+      { id: 5, cat: 'burger', name: 'برغر زنجر', desc: 'فيليه دجاج زنجر حار ومقرمش مع الصوص', syp: 540, tl: 180, img: 'https://images.unsplash.com/photo-1606755962773-d324e0a13086?w=300&auto=format&fit=crop&q=80' },
+
+      // وجبات
+      { id: 6, cat: 'meals', name: 'وجبة فاهيتا', desc: 'دجاج فاهيتا مع البطاطا والمقبلات والصوص', syp: 750, tl: 250, img: 'https://images.unsplash.com/photo-1534422298391-e4f8c172dddb?w=300&auto=format&fit=crop&q=80' },
+      { id: 7, cat: 'meals', name: 'وجبة مكسيكانو', desc: 'خلطة مكسيكانو حارة مع البطاطا والصوصات اللذيذة', syp: 660, tl: 220, img: 'https://images.unsplash.com/photo-1626700051175-6818013e1d4f?w=300&auto=format&fit=crop&q=80' },
+      { id: 8, cat: 'meals', name: 'وجبة كريسبي', desc: 'قطع كريسبي ذهبية مقرمشة مع كريم الثوم والبطاطا', syp: 660, tl: 220, img: 'https://images.unsplash.com/photo-1626082927389-6cd097cdc6ec?w=300&auto=format&fit=crop&q=80' },
+      { id: 9, cat: 'meals', name: 'وجبة زنجر', desc: 'وجبة زنجر شهية مقرمشة مع بطاطا وسلطة وصوص', syp: 690, tl: 230, img: 'https://images.unsplash.com/photo-1562967914-608f82629710?w=300&auto=format&fit=crop&q=80' },
+      { id: 10, cat: 'meals', name: 'وجبة سبايسي', desc: 'قطع مقرمشة بتتبيلة سبايسي حارة ونكهة مميزة', syp: 660, tl: 220, img: 'https://images.unsplash.com/photo-1527477378392-1c0ec6c60d3f?w=300&auto=format&fit=crop&q=80' },
+      { id: 11, cat: 'meals', name: 'وجبة غواصة', desc: 'وجبة غواصة غنية بالجبن السائح مع البطاطا', syp: 750, tl: 250, img: 'https://images.unsplash.com/photo-1509722747041-616f39b57569?w=300&auto=format&fit=crop&q=80' },
+      { id: 12, cat: 'meals', name: 'وجبة بطاطا', desc: 'صحن بطاطا مقلية كبير مقرمش مع الثوم والكاتشب', syp: 300, tl: 100, img: 'https://images.unsplash.com/photo-1573080496219-bb080dd4f877?w=300&auto=format&fit=crop&q=80' },
+
+      // سندويش
+      { id: 13, cat: 'sandwiches', name: 'سندويش كريسبي', desc: 'كريسبي دجاج مقرمش مع المايونيز والخس الطازج', syp: 330, tl: 110, img: 'https://images.unsplash.com/photo-1528735602780-2552fd46c7af?w=300&auto=format&fit=crop&q=80' },
+      { id: 14, cat: 'sandwiches', name: 'سندويش سبايسي', desc: 'دجاج مقرمش متبل بخلطة حارة مع الصوص والمخلل', syp: 330, tl: 110, img: 'https://images.unsplash.com/photo-1603064752734-4c48eff53d05?w=300&auto=format&fit=crop&q=80' },
+      { id: 15, cat: 'sandwiches', name: 'سندويش فاهيتا', desc: 'شرائح الدجاج المتبلة مع الفليفلة والبصل والصوص الخاص', syp: 360, tl: 120, img: 'https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=300&auto=format&fit=crop&q=80' },
+      { id: 16, cat: 'sandwiches', name: 'سندويش غواصة', desc: 'سندويش غواصة محشية غنية بالجبن السائح والبهارات', syp: 390, tl: 130, img: 'https://images.unsplash.com/photo-1621800043295-a73fe2f76e2c?w=300&auto=format&fit=crop&q=80' },
+      { id: 17, cat: 'sandwiches', name: 'سندويش بطاطا', desc: 'سندويش بطاطا مقلية مقرمشة مع كريم الثوم والمخلل', syp: 180, tl: 60, img: 'https://images.unsplash.com/photo-1541592106381-b31e9677c0e5?w=300&auto=format&fit=crop&q=80' },
+
+      // مشروبات
+      { id: 18, cat: 'drinks', name: 'بيبسي تنك', desc: 'علبة بيبسي كولا مثلجة ومنعشة', syp: 90, tl: 30, img: 'https://images.unsplash.com/photo-1629203851122-3726ecdf080e?w=300&auto=format&fit=crop&q=80' },
+      { id: 19, cat: 'drinks', name: 'ميرندا تنك', desc: 'ميرندا برتقال باردة ومنعشة', syp: 90, tl: 30, img: 'https://images.unsplash.com/photo-1622483767028-3f66f32aef97?w=300&auto=format&fit=crop&q=80' },
+      { id: 20, cat: 'drinks', name: 'سفن اب', desc: 'سفن اب بنكهة الليمون المنعش', syp: 90, tl: 30, img: 'https://images.unsplash.com/photo-1551024709-8f23befc6f87?w=300&auto=format&fit=crop&q=80' },
+      { id: 21, cat: 'drinks', name: 'لفت اب', desc: 'مشروب طاقة لفت اب منعش وبارد', syp: 90, tl: 30, img: 'https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?w=300&auto=format&fit=crop&q=80' },
+      { id: 22, cat: 'drinks', name: 'جاك صغير', desc: 'مشروب طاقة جاك عبوة صغيرة باردة', syp: 90, tl: 30, img: 'https://images.unsplash.com/photo-1622543925917-763c34d1a86e?w=300&auto=format&fit=crop&q=80' },
+      { id: 23, cat: 'drinks', name: 'عيران', desc: 'لبن عيران طازج وبارد ولذيذ', syp: 60, tl: 20, img: 'https://images.unsplash.com/photo-1528750997573-59b89d56f4f7?w=300&auto=format&fit=crop&q=80' },
+      { id: 24, cat: 'drinks', name: 'ماء شرب', desc: 'عبوة مياه معدنية نقية وباردة', syp: 30, tl: 10, img: 'https://images.unsplash.com/photo-1548839140-29a749e1bc4e?w=300&auto=format&fit=crop&q=80' }
+    ];
+
+    var categoryNames = {
+      burger: '🍔 قسم البرغر',
+      meals: '🍟 قسم الوجبات',
+      sandwiches: '🌯 قسم السندويش',
+      drinks: '🥤 المشروبات'
+    };
+
+    function renderMenu() {
+      var container = document.getElementById('menu-container');
+      if (!container) return;
+      container.innerHTML = '';
+
+      var catsToRender = currentFilter === 'all' ? ['burger', 'meals', 'sandwiches', 'drinks'] : [currentFilter];
+
+      catsToRender.forEach(function(cat) {
+        var items = products.filter(function(p) { return p.cat === cat; });
+        if (items.length === 0) return;
+
+        var titleDiv = document.createElement('div');
+        titleDiv.className = 'section-title';
+        titleDiv.textContent = categoryNames[cat];
+        container.appendChild(titleDiv);
+
+        var grid = document.createElement('div');
+        grid.className = 'products-grid';
+
+        items.forEach(function(item) {
+          var price = currentCurrency === 'SYP' ? (item.syp + ' ل.س') : (item.tl + ' TL');
+          var card = document.createElement('div');
+          card.className = 'card';
+          card.innerHTML = 
+            '<div class="card-top">' +
+              '<img src="' + item.img + '" class="card-img" alt="' + item.name + '" loading="lazy">' +
+              '<div class="card-info">' +
+                '<div class="card-title">' + item.name + '</div>' +
+                '<div class="card-desc">' + item.desc + '</div>' +
+              '</div>' +
+            '</div>' +
+            '<div class="card-bottom">' +
+              '<div class="card-price">' + price + '</div>' +
+              '<button class="add-btn" onclick="addToCart(' + item.id + ')">+ إضافة</button>' +
+            '</div>';
+          grid.appendChild(card);
+        });
+
+        container.appendChild(grid);
+      });
+    }
+
+    function changeCurrency(curr) {
+      currentCurrency = curr;
+      document.getElementById('btn-syp').classList.toggle('active', curr === 'SYP');
+      document.getElementById('btn-tl').classList.toggle('active', curr === 'TL');
+      renderMenu();
+      updateCartUI();
+    }
+
+    function filterCategory(cat, btn) {
+      currentFilter = cat;
+      document.querySelectorAll('.cat-btn').forEach(function(b) { b.classList.remove('active'); });
+      btn.classList.add('active');
+      renderMenu();
+    }
+
+    function addToCart(id) {
+      cart[id] = (cart[id] || 0) + 1;
+      updateCartUI();
+    }
+
+    function changeQty(id, delta) {
+      if (!cart[id]) return;
+      cart[id] += delta;
+      if (cart[id] <= 0) {
+        delete cart[id];
+      }
+      updateCartUI();
+      if (Object.keys(cart).length === 0) {
+        closeCartModal();
+      }
+    }
+
+    function updateCartUI() {
+      var bar = document.getElementById('cartBar');
+      var totalCount = 0;
+      var totalPrice = 0;
+
+      for (var id in cart) {
+        var qty = cart[id];
+        var item = products.find(function(p) { return p.id == id; });
+        if (item) {
+          totalCount += qty;
+          totalPrice += (currentCurrency === 'SYP' ? item.syp : item.tl) * qty;
+        }
+      }
+
+      if (totalCount === 0) {
+        bar.style.display = 'none';
+        return;
+      }
+
+      bar.style.display = 'flex';
+      var currText = currentCurrency === 'SYP' ? 'ل.س' : 'TL';
+      document.getElementById('cartCount').textContent = totalCount + ' وجبات في السلة';
+      document.getElementById('cartTotal').textContent = totalPrice + ' ' + currText;
+
+      renderModalCart(totalPrice, currText);
+    }
+
+    function openCartModal() {
+      document.getElementById('cartModal').classList.add('active');
+      updateCartUI();
+    }
+
+    function closeCartModal(e) {
+      if (!e || e.target.id === 'cartModal' || e.target.classList.contains('modal-close')) {
+        document.getElementById('cartModal').classList.remove('active');
+      }
+    }
+
+    function renderModalCart(totalPrice, currText) {
+      var listContainer = document.getElementById('modalCartItems');
+      listContainer.innerHTML = '';
+
+      for (var id in cart) {
+        var qty = cart[id];
+        var item = products.find(function(p) { return p.id == id; });
+        if (!item) continue;
+
+        var itemPrice = currentCurrency === 'SYP' ? item.syp : item.tl;
+        var row = document.createElement('div');
+        row.className = 'cart-item-row';
+        row.innerHTML = 
+          '<div class="item-title-col">' +
+            '<div class="item-name">' + item.name + '</div>' +
+            '<div class="item-single-price">' + itemPrice + ' ' + currText + ' للقطعة</div>' +
+          '</div>' +
+          '<div class="qty-controls">' +
+            '<button class="qty-btn" onclick="changeQty(' + item.id + ', -1)">-</button>' +
+            '<span class="qty-number">' + qty + '</span>' +
+            '<button class="qty-btn plus" onclick="changeQty(' + item.id + ', 1)">+</button>' +
+          '</div>';
+        listContainer.appendChild(row);
+      }
+
+      document.getElementById('modalTotal').textContent = totalPrice + ' ' + currText;
+    }
+
+    function sendOrderWhatsApp() {
+      if (Object.keys(cart).length === 0) {
+        alert('يرجى اختيار وجبة واحدة على الأقل قبل إرسال الطلب.');
+        return;
+      }
+
+      var name = document.getElementById('custName').value.trim();
+      var phone = document.getElementById('custPhone').value.trim();
+      var address = document.getElementById('custAddress').value.trim();
+      var notes = document.getElementById('custNotes').value.trim() || 'لا يوجد';
+
+      if (!name) {
+        alert('يرجى كتابة اسمك الكريم لتأكيد الطلب.');
+        document.getElementById('custName').focus();
+        return;
+      }
+
+      if (!phone) {
+        alert('يرجى كتابة رقم الهاتف للتواصل.');
+        document.getElementById('custPhone').focus();
+        return;
+      }
+
+      if (!address) {
+        alert('يرجى كتابة العنوان أو مكان التوصيل.');
+        document.getElementById('custAddress').focus();
+        return;
+      }
+
+      var currText = currentCurrency === 'SYP' ? 'ليرة سورية' : 'TL';
+      var currSymbol = currentCurrency === 'SYP' ? 'ل.س' : 'TL';
+      var total = 0;
+      var itemsText = '';
+
+      for (var id in cart) {
+        var qty = cart[id];
+        var item = products.find(function(p) { return p.id == id; });
+        if (item) {
+          var itemPrice = currentCurrency === 'SYP' ? item.syp : item.tl;
+          var subtotal = itemPrice * qty;
+          total += subtotal;
+          itemsText += '▫️ ' + qty + ' × ' + item.name + ' (' + subtotal + ' ' + currSymbol + ')%0A';
+        }
+      }
+
+      var msg = '🍔 *طلب جديد من مطعم حنين برغر* 🍔%0A' +
+        '━━━━━━━━━━━━━━━%0A' +
+        '👤 *الزبون:* ' + name + '%0A' +
+        '📞 *الرقم:* ' + phone + '%0A' +
+        '📍 *العنوان:* ' + address + '%0A' +
+        '📝 *ملاحظات:* ' + notes + '%0A' +
+        '━━━━━━━━━━━━━━━%0A' +
+        '🛒 *تفاصيل الوجبات:*%0A' +
+        itemsText +
+        '━━━━━━━━━━━━━━━%0A' +
+        '💰 *المجموع:* ' + total + ' ' + currText + '%0A' +
+        '━━━━━━━━━━━━━━━';
+
+      window.open('https://wa.me/963938671515?text=' + msg, '_blank');
+    }
+
+    // التشغيل الفوري المضمون
+    renderMenu();
+    document.addEventListener('DOMContentLoaded', renderMenu);
+    window.addEventListener('load', renderMenu);
+  </script>
+</body>
+</html>
